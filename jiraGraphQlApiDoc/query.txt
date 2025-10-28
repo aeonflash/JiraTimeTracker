@@ -1,0 +1,3458 @@
+atlassianStudio_userSiteContext(cloudId: ID!): AtlassianStudioUserSiteContextResult
+Queries the products available on a site and user permissions to render Atlassian Studio experience for a given site
+
+customerSupport: SupportRequestCatalogQueryApi
+This API is a wrapper for all CSP support Request queries
+
+jsmChat: JsmChatQuery
+this field is added to enable self governed onboarding of Jira GraphQL types to AGG
+see https://hello.atlassian.net/wiki/spaces/PSRV/pages/1010287708/Announcing+self+governed+APIs for more details
+
+The field is not available for OAuth authenticated requests
+playbook_jiraPlaybook(playbookAri: ID!): JiraPlaybookQueryPayload
+This will be used to fetch playbook by playbook Ari
+
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "PlaybooksInJSM")' query directive to the 'playbook_jiraPlaybook' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+playbook_jiraPlaybookInstancesForIssue(
+after: String
+cloudId: ID!
+first: Int = 20
+issueId: String!
+projectKey: String!
+): JiraPlaybookInstanceConnection
+This query will be used once the user clicks the "Playbooks" expandable section in the issue view.
+This will be also used for Show output/Refresh/View Output/Browser reload
+
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "PlaybooksInJSM")' query directive to the 'playbook_jiraPlaybookInstancesForIssue' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+playbook_jiraPlaybookLabelsForProject(
+after: String
+cloudId: ID!
+filters: JiraPlaybookLabelFilter
+first: Int = 10
+projectKey: String!
+): JiraPlaybookLabelConnection
+This Query will used to fetch All Playbook Labels
+
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "PlaybooksInJSM")' query directive to the 'playbook_jiraPlaybookLabelsForProject' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+playbook_jiraPlaybookStepRunsForPlaybookInstance(
+after: String
+first: Int = 20
+playbookInstanceAri: ID!
+): JiraPlaybookStepRunConnection
+This query will be used once the user clicks the "Execution Output" tab in playbook itself.
+
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "PlaybooksInJSM")' query directive to the 'playbook_jiraPlaybookStepRunsForPlaybookInstance' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+playbook_jiraPlaybookStepRunsForProject(
+after: String
+cloudId: ID!
+filters: JiraPlaybookExecutionFilter
+first: Int = 20
+projectKey: String!
+): JiraPlaybookStepRunConnection
+This will be used in "Execution Log" tab in Admin View
+
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "PlaybooksInJSM")' query directive to the 'playbook_jiraPlaybookStepRunsForProject' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+playbook_jiraPlaybookStepUsageForProject(
+after: String
+cloudId: ID!
+filters: JiraPlaybookStepUsageFilter
+first: Int = 20
+projectKey: String!
+): JiraPlaybookStepUsageConnection
+This will be used in Usage Tab in Admin view
+
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "PlaybooksInJSM")' query directive to the 'playbook_jiraPlaybookStepUsageForProject' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+playbook_jiraPlaybooksForProject(
+after: String
+cloudId: ID!
+filters: JiraPlaybookListFilter
+first: Int = 20
+projectKey: String!
+sort: [JiraPlaybooksSortInput!] = [{by: NAME, order: ASC}]
+): JiraPlaybookConnection
+This will be used in List Playbook in Admin View
+
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "PlaybooksInJSM")' query directive to the 'playbook_jiraPlaybooksForProject' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+glance_getVULNIssues: [GlanceUserInsights]
+glance_getPipelineEvents: [GlanceUserInsights]
+glance_getCurrentUserSettings: UserSettings
+catchupEditMetadataForContent(
+cloudId: String
+contentId: ID!
+contentType: CatchupContentType!
+endTimeMs: Long!
+updateType: CatchupOverviewUpdateType
+): CatchupEditMetadataForContent
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+catchupGetLastViewedTime(
+cloudId: String
+contentId: ID!
+contentType: CatchupContentType!
+): CatchupLastViewedTimeResponse
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+catchupVersionDiffMetadataForContent(
+cloudId: String
+contentId: ID!
+contentType: CatchupContentType!
+originalContentVersion: Int!
+revisedContentVersion: Int!
+): CatchupVersionDiffMetadataResponse
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_contentAISummaries(contentAris: [ID]!objectType: KnowledgeGraphObjectType!): [ConfluenceContentAISummaryResponse]
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_latestKnowledgeGraphObjectV2(
+cloudId: String!
+contentId: ID!
+contentType: KnowledgeGraphContentType!
+objectType: KnowledgeGraphObjectType!
+): KnowledgeGraphObjectResponseV2
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+feed(
+after: String
+cloudId: String
+first: Int = 25
+sortBy: String
+): PaginatedFeed
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+forYouFeed(
+after: String
+cloudId: String
+first: Int = 5
+): ForYouPaginatedFeed
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+getAIConfig(cloudId: Stringproduct: Product!): AIConfigResponse
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+getCommentReplySuggestions(
+cloudId: String
+commentId: ID!
+language: String
+): CommentReplySuggestions
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+getCommentsSummary(
+cloudId: String
+commentsType: CommentsType!
+contentId: ID!
+contentType: SummaryType!
+language: String
+): SmartFeaturesCommentsSummary
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+getFeedUserConfig(cloudId: String): FollowingFeedGetUserConfig
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+getRecommendedFeedUserConfig(cloudId: String): RecommendedFeedUserConfig
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+getRecommendedLabels(
+cloudId: String
+entityId: ID!
+entityType: String!
+first: Int
+spaceId: ID!
+): RecommendedLabels
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+getRecommendedPages(
+cloudId: String
+entityId: ID!
+entityType: String!
+experience: String!
+): RecommendedPages
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+getRecommendedPagesSpaceStatus(cloudId: StringentityId: ID!): RecommendedPagesSpaceStatus
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+getSmartContentFeature(cloudId: StringcontentId: ID!): SmartPageFeatures
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+getSmartFeatures(cloudId: Stringinput: [SmartFeaturesInput!]!): SmartFeaturesResponse
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+getSummary(
+backendExperiment: BackendExperiment
+cloudId: String
+contentId: ID!
+contentType: SummaryType!
+language: String
+lastUpdatedTimeSeconds: Long!
+responseType: ResponseType
+): SmartFeaturesContentSummary
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+latestKnowledgeGraphObject(
+contentId: ID!
+contentType: ConfluenceContentType!
+language: String = "english"
+objectType: KnowledgeGraphObjectType!
+objectVersion: String! = "1"
+): KnowledgeGraphObjectResponse
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+csmAi_getAiHubByHelpCenterAri(helpCenterAri: ID!): CsmAiHubResult
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "CsmAiHub")' query directive to the 'csmAi_getAiHubByHelpCenterAri' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+csmAi_generateCoachingTriggeringCondition(
+helpCenterAri: ID!
+conversationId: ID!
+messageId: ID!
+): String!
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "CsmAiHub")' query directive to the 'csmAi_generateCoachingTriggeringCondition' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+csmAi_getAgentVersion(
+helpCenterAri: ID!
+agentId: ID!
+versionId: ID
+): CsmAiAgentVersionResult
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "CsmAiHub")' query directive to the 'csmAi_getAgentVersion' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+ipmInlineDialogs(search: ContentPlatformSearchAPIv2Query!): ContentPlatformIpmInlineDialogSearchConnection!
+ipmInlineDialog(
+id: String!
+publishedOnly: Boolean
+locale: String
+): ContentPlatformIpmInlineDialog
+anchors(search: ContentPlatformSearchAPIv2Query!): ContentPlatformAnchorContentSearchConnection!
+anchor(
+id: String!
+publishedOnly: Boolean
+locale: String
+): ContentPlatformAnchor
+templates(search: ContentPlatformSearchAPIv2Query!): ContentPlatformTemplateContentSearchConnection!
+template(
+id: String!
+publishedOnly: Boolean
+locale: String
+): ContentPlatformTemplate
+customerStories(search: ContentPlatformSearchAPIv2Query!): ContentPlatformCustomerStorySearchConnection!
+customerStory(
+id: String!
+publishedOnly: Boolean
+locale: String
+): ContentPlatformCustomerStory
+templateCollections(search: ContentPlatformSearchAPIv2Query!): ContentPlatformTemplateCollectionContentSearchConnection!
+templateCollection(
+id: String!
+publishedOnly: Boolean
+locale: String
+): ContentPlatformTemplateCollection
+topicOverviews(search: ContentPlatformSearchAPIv2Query!): ContentPlatformTopicOverviewContentSearchConnection!
+topicOverview(
+id: String!
+publishedOnly: Boolean
+locale: String
+): ContentPlatformTopicOverview
+fullTutorials(search: ContentPlatformSearchAPIv2Query!): ContentPlatformTutorialSearchConnection!
+fullTutorial(
+id: String!
+publishedOnly: Boolean
+locale: String
+): ContentPlatformFullTutorial
+fullHubArticles(search: ContentPlatformSearchAPIv2Query!): ContentPlatformHubArticleSearchConnection!
+fullHubArticle(
+id: String!
+publishedOnly: Boolean
+locale: String
+): ContentPlatformFullHubArticle
+pricings(search: ContentPlatformSearchAPIv2Query!): ContentPlatformPricingSearchConnection!
+pricing(
+id: String!
+publishedOnly: Boolean
+locale: String
+): ContentPlatformPricing
+ipmFlags(search: ContentPlatformSearchAPIv2Query!): ContentPlatformIpmFlagSearchConnection!
+ipmFlag(
+id: String!
+publishedOnly: Boolean
+locale: String
+): ContentPlatformIpmFlag
+ipmMultiSteps(search: ContentPlatformSearchAPIv2Query!): ContentPlatformIpmMultiStepSearchConnection!
+ipmMultiStep(
+id: String!
+publishedOnly: Boolean
+locale: String
+): ContentPlatformIpmMultiStep
+releaseNotes(
+after: String
+first: Int! = 10
+search: ContentPlatformSearchOptions
+filter: ContentPlatformReleaseNoteFilterOptions
+filterByAnnouncementPlan: Boolean = false
+productFeatureFlags: JSON
+featureFlagEnvironment: String
+featureFlagProject: String
+publishedOnly: Boolean = true
+visibleInFedRAMP: Boolean = true
+orderBy: String = "createdAt"
+): ContentPlatformReleaseNotesConnection!
+releaseNote(
+id: String!
+publishedOnly: Boolean
+locale: String
+): ContentPlatformReleaseNote
+contentFacet(
+after: String
+first: Int! = 10
+forContentType: String!
+forFields: [String!]!
+withLocales: [String!]! = ["en-US"]
+withFallback: String! = "en-US"
+): ContentPlatformContentFacetConnection!
+smarts: SmartsQueryApi
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+read:space:confluence
+read:page:confluence
+read:blogpost:confluence
+confluence:atlassian-external
+read:account
+identity:atlassian-external
+jiraCannedResponse: JiraCannedResponseQueryApi
+Namespace for the canned response query APIs
+
+ccp: CcpQueryApi
+stakeholderComms_getStakeholder(stakeholderIdInput: StakeholderCommsStakeholderIdInput!): StakeholderCommsStakeholderResponse
+The field is not available for OAuth authenticated requests
+stakeholderComms_getStakeholdersByAssignment(paginatedStakeholderInput: StakeholderCommsPaginatedStakeholderInput!): StakeholderCommsPaginatedStakeholderResults
+The field is not available for OAuth authenticated requests
+stakeholderComms_getAssignmentsByStakeholder(paginatedAssignmentByStakeholderIdInput: StakeholderCommsPaginatedAssignmentByStakeholderInput!): StakeholderCommsPaginatedAssignmentResults
+The field is not available for OAuth authenticated requests
+stakeholderComms_getStakeholdersByAssignmentV2(stakeholderConnectionInput: StakeholderCommsStakeholderConnectionInput!): StakeholderCommsStakeholderConnection
+The field is not available for OAuth authenticated requests
+stakeholderComms_listStakeholders(listStakeholderConnectionInput: StakeholderCommsListStakeholderConnectionInput!): StakeholderCommsStakeholderConnection
+The field is not available for OAuth authenticated requests
+stakeholderComms_getAssignmentsByStakeholderV2(assignmentConnectionInput: StakeholderCommsAssignmentConnectionInput!): StakeholderCommsAssignmentConnection
+The field is not available for OAuth authenticated requests
+stakeholderComms_isStakeholderGroupNameUnique(name: String!): Boolean
+The field is not available for OAuth authenticated requests
+stakeholderComms_getMemberships(groupId: String!): [StakeholderCommsStakeholderGroupMembership]
+The field is not available for OAuth authenticated requests
+stakeholderComms_getStakeholderGroup(id: String!): StakeholderCommsStakeholderGroup
+The field is not available for OAuth authenticated requests
+stakeholderComms_getStakeholderGroupByMembership(id: String!): [StakeholderCommsStakeholderGroup]
+The field is not available for OAuth authenticated requests
+stakeholderComms_getStakeholderGroupWithMemberships(id: String!): StakeholderCommsStakeholderGroupsAndMemberships
+The field is not available for OAuth authenticated requests
+stakeholderComms_getStakeholderGroupsWithMemberships(
+first: Int
+after: String
+last: Int
+before: String
+): StakeholderCommsStakeholderGroupConnection
+The field is not available for OAuth authenticated requests
+townsquare: TownsquareQueryApi
+projects_byAris: [TownsquareProject]
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+read:project:townsquare
+projects_updatesByIds(projectUpdateIds: [String!]!): [TownsquareProjectUpdate]
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+read:project:townsquare
+projects_byId(projectId: String!): TownsquareProject
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+read:project:townsquare
+projects_byIds(projectIds: [String!]!): [TownsquareProject]
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+read:project:townsquare
+home_tagSearch(
+searchString: String
+containerId: String
+after: String
+first: Int
+sort: [TownsquareTagSortEnum]
+): TownsquareTagConnection
+The field is not available for OAuth authenticated requests
+projects_search(
+searchString: String!
+containerId: String!
+after: String
+first: Int
+sort: [TownsquareProjectSortEnum]
+): TownsquareProjectConnection
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+read:project:townsquare
+projects_linksByIds(linkIds: [ID!]!): [TownsquareLink]
+projects_canCreateProjectFusion(input: TownsquareProjectsCanCreateProjectFusionInput!): TownsquareProjectsCanCreateProjectFusionPayload
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+read:project:townsquare
+knowledgeBaseSpacePermission_bulkQuery(cloudId: ID!spaceAris: [ID!]!): [KnowledgeBaseSpacePermissionQueryResponse]!
+Fetch permissions for multiple spaces
+
+The field is not available for OAuth authenticated requests
+devOps: DevOps
+Namespace for fields relating to DevOps data
+
+opsgenieTeamRelationshipForDevOpsService(id: ID!): DevOpsServiceAndOpsgenieTeamRelationship
+Returns the Opsgenie Team relationship linked to the DevOps Service with the specified id (service ARI).
+
+The field is not available for OAuth authenticated requests
+devOpsServiceRelationshipsForOpsgenieTeam(
+id: ID!
+first: Int = 20
+after: String
+): DevOpsServiceAndOpsgenieTeamRelationshipConnection
+Returns the service relationships linked to the Opsgenie team with the specified id (Opsgenie team ARI).
+
+The field is not available for OAuth authenticated requests
+devOpsServiceAndOpsgenieTeamRelationship(id: ID!): DevOpsServiceAndOpsgenieTeamRelationship
+Returns the relationship between DevOps Service and Opsgenie team with the specified id (graph service_and_opsgenie_team ARI)
+
+The field is not available for OAuth authenticated requests
+devOpsServiceRelationshipsForJiraProject(
+id: ID!
+first: Int = 20
+after: String
+filter: DevOpsServiceAndJiraProjectRelationshipFilter
+): DevOpsServiceAndJiraProjectRelationshipConnection
+Return the connection entity for DevOps Service relationships for the specified Jira project, according to the specified
+pagination, filtering and sorting.
+
+The field is not available for OAuth authenticated requests
+jiraProjectRelationshipsForService(
+id: ID!
+first: Int = 20
+after: String
+filter: DevOpsServiceAndJiraProjectRelationshipFilter
+): DevOpsServiceAndJiraProjectRelationshipConnection
+Return the connection entity for Jira Project relationships for the specified DevOps Service, according to the specified
+pagination, filtering and sorting.
+
+The field is not available for OAuth authenticated requests
+devOpsServiceAndJiraProjectRelationship(id: ID!): DevOpsServiceAndJiraProjectRelationship
+Return the relationship between DevOps Service and Jira Project
+
+The field is not available for OAuth authenticated requests
+devOpsServiceAndRepositoryRelationship(id: ID!): DevOpsServiceAndRepositoryRelationship
+Returns the relationship between DevOps Service and Repository
+
+The field is not available for OAuth authenticated requests
+devOpsServiceRelationshipsForRepository(
+id: ID!
+first: Int = 20
+after: String
+filter: DevOpsServiceAndRepositoryRelationshipFilter
+sort: DevOpsServiceAndRepositoryRelationshipSort
+): DevOpsServiceAndRepositoryRelationshipConnection
+Returns the service relationships linked to the repository with the specified id.
+The ID is either a Bitbucket repository ARI, or the ID of a third-party repository.
+
+The field is not available for OAuth authenticated requests
+repositoryRelationshipsForDevOpsService(
+id: ID!
+first: Int = 20
+after: String
+filter: DevOpsServiceAndRepositoryRelationshipFilter
+sort: DevOpsServiceAndRepositoryRelationshipSort
+): DevOpsServiceAndRepositoryRelationshipConnection
+Returns the repository relationships linked to the service with the specified id (service ARI).
+
+The field is not available for OAuth authenticated requests
+unified: UnifiedQuery
+The field is not available for OAuth authenticated requests
+orgPolicy_policyDetails(id: ID!): OrgPolicyPolicyDetails
+orgPolicy_policiesDetails(ids: [ID]!): [OrgPolicyPolicyDetails]
+confluence(cloudId: ID): ConfluenceQueryApi
+appActiveTunnels(appId: ID!environmentId: ID!): AppTunnelDefinitions
+Returns the list of active tunnels for a given app-id and environment-key.
+
+The tunnels are active for 30min by default, if not requested to be terminated.
+
+The field is not available for OAuth authenticated requests
+signup: SignupQueryApi
+The field is not available for OAuth authenticated requests
+supportInquiry_userContext: SupportInquiryUserContext
+supportInquiry_channelsIdentityHash: String
+assetsDM_objectClasses(workspaceId: ID!cloudId: ID!): [AssetsDMObjectClass]
+The field is not available for OAuth authenticated requests
+assetsDM_objectsListColumns(
+workspaceId: ID!
+cloudId: ID!
+objectId: ID!
+): AssetsDMObjectsListColumns
+The field is not available for OAuth authenticated requests
+assetsDM_dataSourceMerge(
+workspaceId: ID!
+cloudId: ID!
+dataSourceId: ID!
+jobId: ID!
+): AssetsDMDataSourceMergeResponse
+The field is not available for OAuth authenticated requests
+assetsDM_transformedData(
+workspaceId: ID!
+cloudId: ID!
+dataSourceId: ID!
+pagination: AssetsDMPaginationInput
+filters: [AssetsDMTransformedDataFilterInput!]
+): AssetsDMTransformedDataResponse
+The field is not available for OAuth authenticated requests
+assetsDM_rawData(
+workspaceId: ID!
+cloudId: ID!
+dataSourceId: ID!
+pagination: AssetsDMPaginationInput
+filters: [AssetsDMRawDataFilterInput!]
+): AssetsDMRawDataResponse
+The field is not available for OAuth authenticated requests
+assetsDM_dataSourceTransform(
+workspaceId: ID!
+cloudID: ID!
+dataSourceTypeId: Int!
+isTemplate: Boolean!
+jobId: ID
+): AssetsDMDataSourceTransform
+The field is not available for OAuth authenticated requests
+assetsDM_objectsReportDsByDs(
+workspaceId: ID!
+cloudId: ID!
+objectId: ID!
+fromSources: [String!]!
+): AssetsDMObjectsReportDsByDs
+The field is not available for OAuth authenticated requests
+assetsDM_dataSourceConfig(
+workspaceId: ID!
+cloudId: ID!
+dataSourceTypeId: Int!
+jobId: ID
+): AssetsDMDataSourceConfig
+The field is not available for OAuth authenticated requests
+assetsDM_dataSourceDetails(
+workspaceId: ID!
+cloudId: ID!
+dataSourceTypeId: Int!
+jobId: ID
+): AssetsDMDataSourceDetails
+The field is not available for OAuth authenticated requests
+assetsDM_dataSourceMapping(
+workspaceId: ID!
+cloudId: ID!
+dataSourceId: ID!
+objectClassName: String!
+): [AssetsDMDataSourceMapping!]
+The field is not available for OAuth authenticated requests
+assetsDM_objectTags(
+workspaceId: ID!
+cloudId: ID!
+objectId: ID!
+): AssetsDMObjectTags
+The field is not available for OAuth authenticated requests
+assetsDM_objectsListDataRows(
+workspaceId: ID!
+cloudId: ID!
+objectId: ID!
+pageInfo: AssetsDMObjectsListPageInfoInput
+sortBy: AssetsDMObjectsListSortBy
+): AssetsDMObjectsListDataRows
+The field is not available for OAuth authenticated requests
+assetsDM_adapters(workspaceId: ID!cloudId: ID!): AssetsDMAdapters
+The field is not available for OAuth authenticated requests
+assetsDM_datasourceCleansingRules(
+workspaceId: ID!
+cloudId: ID!
+dataSourceId: ID!
+): AssetsDMDataSourceCleansingRulesResponse
+The field is not available for OAuth authenticated requests
+assetsDM_dataSourceFormFields(
+workspaceId: ID!
+cloudId: ID!
+schemaId: String
+): AssetsDMDataSourceFormFields
+The field is not available for OAuth authenticated requests
+marketplaceConsole: MarketplaceConsoleQueryApi!
+actions: Actions
+Discover actions that can be executed in certain contexts
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+pullrequest:write
+notifications: InfluentsNotificationQuery
+Query object for Notification Experience
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+jira:atlassian-external
+read:jira-work
+read:blogpost:confluence
+read:comment:confluence
+read:page:confluence
+read:space:confluence
+extensionsEcho(text: String!): String
+The field is not available for OAuth authenticated requests
+extensionContexts(contextIds: [ID!]!): [ExtensionContext!]
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+jira:atlassian-external
+extensionContext(contextId: ID!): ExtensionContext
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+jira:atlassian-external
+extensionByKey(
+contextId: ID!
+definitionId: ID!
+extensionKey: String!
+locale: String
+): Extension
+The field is not available for OAuth authenticated requests
+echo: String
+This field will echo back the word echo. Its only useful for testing
+
+diagnostics: JSON
+This field will dump diagnostics information about currently executing graphql request.
+
+It is inspired in part by https://httpbin.org/anything
+
+node(id: ID!): Node
+Lookup an Atlassian entity by a global id - the value of id has to be an Atlassan Resource Identifier (ARI).
+
+townsquareUnsharded_allWorkspaceSummariesForOrg(
+first: Int
+after: String
+cloudId: String!
+): TownsquareUnshardedWorkspaceSummaryConnection
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+read:workspace:townsquare
+townsquareUnsharded_fusionConfigByJiraIssueAris(jiraIssueAris: [String]): [TownsquareUnshardedFusionConfigForJiraIssueAri]
+Get whether the connect app is enabled for the site associated with jira issue ari.
+Limit queries to 10 jiraIssueAris per request. Requests exceeding this will fail in the future.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+read:workspace:townsquare
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "TownsquareUnsharded")' query directive to the 'townsquareUnsharded_fusionConfigByJiraIssueAris' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+customerService(cloudId: ID!): CustomerServiceQueryApi
+Customer Service Query API namespaced to customerService
+
+activity: Activity
+API v3
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+jira:atlassian-external
+read:jira-work
+read:blogpost:confluence
+read:comment:confluence
+read:page:confluence
+read:space:confluence
+allUpdatesFeed(
+after: String
+first: Int = 25
+groupBy: [AllUpdatesFeedEventType!]
+spaceKeys: [String!]
+users: [String!]
+): PaginatedAllUpdatesFeed
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+contentAnalyticsViewers(contentId: ID!fromDate: String): ContentAnalyticsViewers
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+contentAnalyticsViews(contentId: ID!fromDate: String): ContentAnalyticsViews
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+contentAnalyticsViewsByUser(
+accountIds: [String]
+contentId: ID!
+engageTimeThreshold: Int
+isPrivacyModeEnabled: Boolean
+limit: Int
+): ContentAnalyticsViewsByUser
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+myVisitedPages(limit: Int): MyVisitedPages
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+myVisitedSpaces(
+accountId: [String]
+cloudId: ID
+cursor: String
+endTime: String
+eventName: [AnalyticsEventName]
+limit: Int
+sortOrder: RelevantUsersSortOrder
+startTime: String
+): MyVisitedSpaces
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+popularFeed(
+after: String
+first: Int = 25
+timeGranularity: String
+): PaginatedPopularFeed
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+topRelevantUsers(
+endTime: String
+eventName: [AnalyticsEventName]
+sortOrder: RelevantUsersSortOrder
+spaceId: [String!]!
+startTime: String
+userFilter: RelevantUserFilter
+): TopRelevantUsers
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+devai_autodevJobLogs(
+first: Int
+after: String
+cloudId: ID!
+jobId: ID!
+excludePriorities: [DevAiAutodevLogPriority]
+minPriority: DevAiAutodevLogPriority
+): DevAiAutodevLogConnection
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "DevAiLogs")' query directive to the 'devai_autodevJobLogs' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+devai_autodevJobFileContents(
+cloudId: ID!
+jobId: ID!
+fileName: String!
+startLine: Int
+endLine: Int
+): String
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "DevAiLoadFile")' query directive to the 'devai_autodevJobFileContents' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+devai_autodevIssueScoping(
+issueId: ID!
+issueSummary: String!
+issueDescription: String
+): DevAiIssueScopingResult
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "DevAiIssueScopingResult")' query directive to the 'devai_autodevIssueScoping' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+devai_autodevAgentForJob(jobId: ID!cloudId: ID!): DevAiRovoAgent
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "DevAiVerticalAutodev")' query directive to the 'devai_autodevAgentForJob' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+devai_autodevIssueScopingScoreForJob(jobId: ID!cloudId: ID!): DevAiIssueScopingResult
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "DevAiVerticalAutodev")' query directive to the 'devai_autodevIssueScopingScoreForJob' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+devai_autodevRovoAgents(
+first: Int
+after: String
+cloudId: ID!
+query: String
+templatesFilter: DevAiRovoAgentTemplateFilter
+issueIds: [ID!]
+filterByRankCategories: [DevAiRovoAgentRankCategory!]
+): DevAiRovoAgentConnection
+List Rovo agents that can execute Autodev.
+
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "DevAiVerticalAutodev")' query directive to the 'devai_autodevRovoAgents' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+devai_autodevJobsForIssue(issueAri: ID!jobIdFilter: [ID!]): JiraAutodevJobConnection
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "DevAiAutodevJobs")' query directive to the 'devai_autodevJobsForIssue' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+devai_autodevJobsByAri(jobAris: [ID!]!): [JiraAutodevJob]
+Fetch autodev job information. NOTE: For performance reasons, several fields are not available on this query, namely: codeChanges, plan, gitDiff.
+
+devai_technicalPlannerJobsForIssue(
+first: Int
+after: String
+issueAri: ID!
+): DevAiTechnicalPlannerJobConnection
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "DevAiTechnicalPlanner")' query directive to the 'devai_technicalPlannerJobsForIssue' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+devai_codePlannerJobsForIssue(
+first: Int
+after: String
+cloudId: ID!
+issueKey: String!
+): DevAiTechnicalPlannerJobConnection
+Fetch code planner jobs for a Jira issue using issue key and cloud ID.
+
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "DevAiTechnicalPlanner")' query directive to the 'devai_codePlannerJobsForIssue' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+devai_technicalPlannerJobById(cloudId: ID!jobId: ID!): DevAiTechnicalPlannerJob
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "DevAiTechnicalPlanner")' query directive to the 'devai_technicalPlannerJobById' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+devai_flowSessionGetByARI(id: ID!): DevAiFlowSession
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "DevAiFlowSessionGetByARI")' query directive to the 'devai_flowSessionGetByARI' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+devai_flowSessionGetByIDAndCloudID(sessionId: ID!cloudId: ID!): DevAiFlowSession
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "DevAiFlowSessionGetByIDAndCloudID")' query directive to the 'devai_flowSessionGetByIDAndCloudID' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+devai_flowSessionsByCreatorAndCloudId(
+creator: String!
+cloudId: ID!
+statusFilter: DevAiFlowSessionsStatus
+): [DevAiFlowSession]
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "DevAiFlowSessionsByCreatorAndCloudId")' query directive to the 'devai_flowSessionsByCreatorAndCloudId' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+devai_flowSessionsConnectionByCreatorAndCloudId(
+first: Int
+after: String
+creator: String!
+cloudId: ID!
+statusFilter: DevAiFlowSessionsStatus
+): DevAiFlowSessionConnection
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "DevAiFlowSessionsConnectionByCreatorAndCloudId")' query directive to the 'devai_flowSessionsConnectionByCreatorAndCloudId' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+devai_flowSessionsByIssueKeyAndCloudId(
+issueKey: String!
+cloudId: ID!
+statusFilter: DevAiFlowSessionsStatus
+): DevAiFlowSessionConnection
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "DevAiFlowSessionsByIssueKeyAndCloudId")' query directive to the 'devai_flowSessionsByIssueKeyAndCloudId' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+devai_flowSessionResume(id: ID!): DevAiFlowPipeline
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "DevAiFlowSessionResume")' query directive to the 'devai_flowSessionResume' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+devai_rovoDevAgentsWorkspace(cloudId: ID!): DevAiWorkspace
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "DevAiWorkspace")' query directive to the 'devai_rovoDevAgentsWorkspace' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+devai_rovoDevAgentsUser(cloudId: ID!atlassianAccountId: ID): DevAiUser
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "DevAiUsers")' query directive to the 'devai_rovoDevAgentsUser' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+devai_rovodevSessionsByAri(sessionAris: [ID!]!): [DevAiRovoDevSession!]
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "DevAiRovoDevSessions")' query directive to the 'devai_rovodevSessionsByAri' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+devai_flowGetRepositories(cloudId: ID!search: String): DevAiFlowRepositoryConnection
+Search repositories accessible to user across bitbucket and github
+
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "DevAiFlowRepositoryConnection")' query directive to the 'devai_flowGetRepositories' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+devai_getPrefillRepoUrlForFlow(
+cloudId: ID
+issueKey: String
+prompt: String
+): DevAiFlowRepository
+Get prefill repository URL for Flow using issue key, cloud ID and summary.
+
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "DevAiRepoFinder")' query directive to the 'devai_getPrefillRepoUrlForFlow' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+devai_getUserPermissionsForRepo(cloudId: IDrepoUrl: String): Boolean
+Get user permissions for a repository.
+
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "DevAiPermissions")' query directive to the 'devai_getUserPermissionsForRepo' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+devai_rovodevSessionsByIssueKey(
+cloudId: ID
+issueKey: String
+first: Int
+after: String
+): DevAiRovoDevSessionConnection
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "DevAiRovoDevSessionsByIssueKey")' query directive to the 'devai_rovodevSessionsByIssueKey' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+devai_rovodevSessionsByCloudId(
+cloudId: ID!
+sessionStatus: DevAiRovoDevSessionStatus
+first: Int
+after: String
+sort: DevAiRovoDevSessionSort
+): DevAiRovoDevSessionConnection
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "DevAiRovoDevSessions")' query directive to the 'devai_rovodevSessionsByCloudId' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+devai_rovodevSessions(
+workspaceAri: ID!
+sessionStatus: DevAiRovoDevSessionStatus
+isArchived: DevAiRovoDevSessionArchivedFilter
+first: Int
+after: String
+sort: DevAiRovoDevSessionSort
+): DevAiRovoDevSessionConnection
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "DevAiRovoDevSessions")' query directive to the 'devai_rovodevSessions' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+devai_rovodevSessionById(id: ID!): DevAiRovoDevSession
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "DevAiRovoDevSessions")' query directive to the 'devai_rovodevSessionById' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+jsw: JswQuery
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+boardScope(
+boardId: ID!
+isCMP: Boolean
+customFilterIds: [ID]
+filterJql: String
+): BoardScope
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+developmentInformation(issueId: ID!): IssueDevOpsDevelopmentInformation
+Beta Field
+This field is currently in a beta phase and may change without notice.
+
+To use this field you must set a X-ExperimentalApi: IssueDevelopmentInformation HTTP header.
+
+Use of this header indicates that they are opting into the experimental preview of this field.
+
+If you do not set this header then the request will be rejected outright.
+
+Once the field moves out of the beta phase, then the header will no longer be required or checked.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+softwareBoards(projectAri: ID!): BoardScopeConnection
+Beta Field
+This field is currently in a beta phase and may change without notice.
+
+To use this field you must set a X-ExperimentalApi: softwareBoards HTTP header.
+
+Use of this header indicates that they are opting into the experimental preview of this field.
+
+If you do not set this header then the request will be rejected outright.
+
+Once the field moves out of the beta phase, then the header will no longer be required or checked.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+apps(
+first: Int
+after: String
+last: Int
+before: String
+filter: AppsFilter
+): AppConnection
+The field is not available for OAuth authenticated requests
+app(id: ID!): App
+The field is not available for OAuth authenticated requests
+appHostServices(filter: AppServicesFilter): [AppHostService!]
+Returns information about all the scopes from different Atlassian products
+
+The field is not available for OAuth authenticated requests
+appHostServiceScopes(keys: [ID!]!): [AppHostServiceScope]!
+The field is not available for OAuth authenticated requests
+appContributors(id: ID!): [AppContributor!]!
+The field is not available for OAuth authenticated requests
+appInstallationTask(id: ID!): AppInstallationTask
+cs-installations Query
+
+The field is not available for OAuth authenticated requests
+ecosystem: EcosystemQuery
+The field is not available for OAuth authenticated requests
+queuesprioritygroups_priorityGroups(projectId: ID!): QueuesPriorityGroupsResults
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+read:servicedesk-request
+search: SearchQueryAPI
+The search method serves as an entry point to the various results across multiple Atlassian products.
+This method proxy to Search Platform's API xpsearch-aggregator.
+It supports multi tenant search with product specific filtering.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+confluence:atlassian-external
+me: AuthenticationContext!
+This returns information about the currently logged in user. If there is no logged in user
+then there really wont be much information to show.
+
+This does not process impersonation data. Avoid using the API in products that support impersonation.
+
+user(accountId: ID!): User
+Given an account id this will return user profile information with applied privacy controls of the caller.
+
+Its important to remember that privacy controls are applied in terms of the caller. A user with
+a certain accountId may exist but the current caller may not have the right to view their details.
+
+users(accountIds: [ID!]!): [User!]
+Given a list of account ids this will return user profile information with applied privacy controls of the caller.
+
+Its important to remember that privacy controls are applied in terms of the caller. A user with
+a certain accountId may exist but the current caller may not have the right to view their details.
+
+A maximum of 90 accountIds can be asked for at the one time.
+
+identity_groupsByIds(ids: [ID!]!): [IdentityGroup!]
+Given Identity Scoped Group ARIs, returns group information.
+
+The input is a special scoped version of the Identity Group ARI.
+
+This returns a set of results (without duplicates), and IDs that are not found will not be returned.
+
+The field is not available for OAuth authenticated requests
+helpExternalResource(cloudId: ID!): HelpExternalResourceQueryApi
+marketplaceStore: MarketplaceStoreQueryApi!
+knowledgeBase(cloudId: ID!): KnowledgeBaseQueryApi
+The field is not available for OAuth authenticated requests
+knowledgeBase_searchArticles(searchInput: KnowledgeBaseArticleSearchInput): KnowledgeBaseArticleSearchResponse
+The field is not available for OAuth authenticated requests
+knowledgeBase_getLinkedSourceTypes(container: ID): KnowledgeBaseLinkedSourceTypesResponse
+The field is not available for OAuth authenticated requests
+appLogs(
+last: Int = 20
+first: Int
+before: String
+after: String
+appId: ID!
+environmentId: [ID!]!
+query: LogQueryInput
+): AppLogConnection
+appLogs() returns an object for paging over AppLog objects, each of which
+represents one invocation of a function.
+
+The returned objects use the Relay naming/nesting style of
+AppLogConnection → [AppLogEdge] → AppLog.
+
+It takes parameters (query: LogQueryInput) to narrow down the invocations
+being searched, requiring at least an app and environment.
+
+The field is not available for OAuth authenticated requests
+appLogLines(
+first: Int = 100
+after: String
+invocation: ID!
+appId: String
+environmentId: String
+query: LogQueryInput
+): AppLogLineConnection
+appLogLines() returns an object for paging over the contents of a single
+invocation's log lines, given by the invocation parameter (an ID
+returned from a appLogs() query).
+
+Each AppLogLine consists of a timestamp, an optional message,
+an optional level, and an other field that contains any
+additional JSON fields included in the log line. (Since
+the app itself can control the schema of this JSON, we can't
+use native GraphQL capabilities to describe the fields here.)
+
+The returned objects use the Relay naming/nesting style of
+AppLogLineConnection → [AppLogLineEdge] → AppLogLine.
+
+The field is not available for OAuth authenticated requests
+developerLogAccess(
+contextIds: [ID!]!
+appId: ID!
+environmentType: AppEnvironmentType!
+): [DeveloperLogAccessResult]
+Check if developer has access to logs
+
+The field is not available for OAuth authenticated requests
+installationContextsWithLogAccess(appId: ID!): [InstallationContextWithLogAccess!]
+Return a list of installation contexts with forge logs access
+
+The field is not available for OAuth authenticated requests
+logAccessByContexts(appId: ID!contextInstallationPairs: [InstallationContextWithInstallationIdInput!]!): [InstallationContextWithInstallationIdResponse!]
+Return a list of installation contexts with forge logs access for specific contexts
+
+The field is not available for OAuth authenticated requests
+installationContexts(appId: ID!): [InstallationContext!]
+Return all the installation contexts
+
+The field is not available for OAuth authenticated requests
+appLogsWithMetaData(
+appId: String!
+environmentId: String!
+offset: Int!
+limit: Int!
+queryStartTime: String!
+query: LogQueryInput
+): AppLogsWithMetaDataResponse
+Returns the list of app logs with define filter with logs searching capability.
+
+The field is not available for OAuth authenticated requests
+sqlSchemaSizeLog(installationId: ID!appId: ID!): SQLSchemaSizeLogResponse!
+Returns the database size from the schema size table for an installation of a forge app.
+
+The field is not available for OAuth authenticated requests
+sqlSlowQueryLogs(
+installationId: ID!
+interval: QueryInterval!
+queryType: [QueryType!]!
+appId: ID!
+): [SQLSlowQueryLogsResponse!]!
+Returns the list of slow queries from a forge app.
+
+The field is not available for OAuth authenticated requests
+invitationUrls: InvitationUrlsPayload
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+convoai_jiraSimilarWorkItems(
+cloudId: ID!
+experience: String!
+workItemInput: ConvoAiJiraSimilarWorkItemsInput!
+first: Int
+last: Int
+after: String
+before: String
+): ConvoAiJiraSimilarWorkItemsConnection
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+convoai_jiraRelatedResourcesSuggestions(
+id: ID!
+searchSourcesInput: ConvoAiJiraSearchSourcesInput
+l2ScoreThreshold: Float
+xpsearchL1: String
+xpsearchL2: String
+first: Int
+last: Int
+after: String
+before: String
+): ConvoAiJiraIssueRelatedResourcesResult
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+helpLayout(cloudId: ID): HelpLayoutQueryApi
+The field is not available for OAuth authenticated requests
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "HelpLayoutExperimentalSchema")' query directive to the 'helpLayout' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+suggest: QuerySuggestionAPI
+The search method serves as an entry point to the various results across multiple Atlassian products.
+This method proxy to Search Platform's API xpsearch-aggregator.
+It supports multi tenant search with product specific filtering.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+aiCoreApi_vsaReportingByProject(projectAri: ID!): AiCoreApiVSAReportingResult
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+aiCoreApi_vsaQuestionsByProject(projectAri: ID!): AiCoreApiVSAQuestionsResult
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+aiCoreApi_vsaQuestionsByProjectAndType(
+projectAri: ID!
+types: [AiCoreApiQuestionType]
+limit: Int
+): AiCoreApiVSAQuestionsWithTypeResult
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+xflow: String
+confluence_empty(id: ID!): String
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+virtualAgent: VirtualAgentQueryApi
+The field is not available for OAuth authenticated requests
+appDeployment(
+appId: ID!
+environmentKey: String!
+id: ID!
+): AppDeployment
+The field is not available for OAuth authenticated requests
+buildsByApp(
+after: String
+appId: ID!
+before: String
+first: Int
+last: Int
+): BuildConnection
+The field is not available for OAuth authenticated requests
+appContainers(appId: ID!): [AppContainer!]
+The field is not available for OAuth authenticated requests
+appContainer(appId: ID!containerKey: String!): AppContainer
+The field is not available for OAuth authenticated requests
+appContainerRegistryLogin(appId: ID!): AppContainerRegistryLogin
+The field is not available for OAuth authenticated requests
+appContainerServices(
+appId: ID!
+environmentKey: String!
+serviceNames: [String!]!
+): AppContainerServices
+The field is not available for OAuth authenticated requests
+jiraOAuthApps: JiraOAuthAppsApps
+The field is not available for OAuth authenticated requests
+external_entities(ids: [ID!]!): ExternalEntities
+The field is not available for OAuth authenticated requests
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "ExternalDataDepotQueryV2")' query directive to the 'external_entities' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+external_entitiesV2(graphWorkspaceAri: ID!ids: [ID!]!): ExternalEntities
+The field is not available for OAuth authenticated requests
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "ExternalDataDepotQueryV2")' query directive to the 'external_entitiesV2' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+radar_workspace(cloudId: ID!): RadarWorkspace!
+Data about this workspace
+
+The field is not available for OAuth authenticated requests
+radar_positionByAri(id: ID!): RadarPosition
+Get position by ARI
+
+The field is not available for OAuth authenticated requests
+radar_positionsByAris(ids: [ID!]!): [RadarPosition!]
+Get positions by ARI; maximum list of 100
+
+The field is not available for OAuth authenticated requests
+radar_positionsSearch(
+cloudId: ID!
+rql: String
+first: Int
+after: String
+last: Int
+before: String
+): RadarPositionConnection
+Search for a list of positions providing cursor pagination, row filtering (rql), sorting (rql), and column filtering (fields)
+
+The field is not available for OAuth authenticated requests
+radar_positionsByEntitySearch(
+cloudId: ID!
+entity: RadarPositionsByEntityType
+input: RadarPositionsByEntityInput
+rql: String
+first: Int
+after: String
+last: Int
+before: String
+): RadarPositionsByEntityConnection
+Search for a list of positions by entity providing cursor pagination, row filtering (rql), sorting (rql), and column filtering (fields)
+
+The field is not available for OAuth authenticated requests
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "RadarGA")' query directive to the 'radar_positionsByEntitySearch' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+radar_workerByAri(id: ID!): RadarWorker
+Get worker by ARI
+
+The field is not available for OAuth authenticated requests
+radar_workersByAris(ids: [ID!]!): [RadarWorker!]
+Get workers by ARI; maximum list of 100
+
+The field is not available for OAuth authenticated requests
+radar_fieldValues(
+cloudId: ID!
+uniqueFieldId: ID!
+rql: String
+first: Int
+after: String
+last: Int
+before: String
+): RadarFieldValuesConnection
+A list of values for this field that allow row filtering (rql), sorting (rql), and cursor pagination
+
+The field is not available for OAuth authenticated requests
+radar_groupMetrics(
+cloudId: ID!
+uniqueFieldIdIsIn: [ID!]!
+rql: String
+first: Int
+after: String
+last: Int
+before: String
+): RadarGroupMetricsConnection
+A list of groupings of entities by fields and their stats that allow row filtering (rql), and cursor pagination
+
+The field is not available for OAuth authenticated requests
+radar_connectors(cloudId: ID!): [RadarConnector!]
+Get list of connectors for a workspace
+
+The field is not available for OAuth authenticated requests
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "RadarGA")' query directive to the 'radar_connectors' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+helpCenter(cloudId: ID!): HelpCenterQueryApi
+The field is not available for OAuth authenticated requests
+knowledgeDiscovery: KnowledgeDiscoveryQueryApi
+trello: TrelloQueryApi!
+userDna: UserFingerprintQuery
+Fetches the requested user fingerprint data. If true, uses the identity-graph.
+
+The field is not available for OAuth authenticated requests
+growthRecommendations: GrowthRecQuery
+Retrieve recommendations of entities (i.e. Products, Templates and Messages etc.).
+OAuth scope READ_ME required for the current logged-in user. Anonymous users can still access the API without OAuth scopes.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+read:me
+agentStudio_getByExternalReference(cloudId: String!externalReference: String!): AgentStudioAgentResult
+Query an agent by external reference
+
+agentStudio_agentById(id: ID!): AgentStudioAgentResult
+Query an agent by id
+
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "AgentStudio")' query directive to the 'agentStudio_agentById' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+agentStudio_getAgents(
+cloudId: String!
+first: Int
+after: String
+product: String
+input: AgentStudioAgentQueryInput
+): AgentStudioAgentsConnection
+Retrieve agents for a given cloudId with pagination and filtering support.
+
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "AgentStudio")' query directive to the 'agentStudio_getAgents' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+agentStudio_suggestConversationStarters(cloudId: String!input: AgentStudioSuggestConversationStartersInput!): AgentStudioSuggestConversationStartersResult
+Suggest conversation starters for an agent
+
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "AgentStudio")' query directive to the 'agentStudio_suggestConversationStarters' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+agentStudio_scenarioById(id: ID!containerId: ID!): AgentStudioScenarioResult
+Query a scenario by id
+
+agentStudio_scenariosByIds(ids: [ID!]!containerId: ID!): [AgentStudioScenario]
+Retrieve scenarios in bulk by ID. The returned list is 1:1 with the input, with non-existent entities or invalid IDs having null values.
+
+agentStudio_scenarioListByContainerId(
+cloudId: String!
+containerId: ID!
+first: Int
+last: Int
+after: String
+before: String
+): AgentStudioScenariosResult
+Query scenario list by container id
+
+agentStudio_getCreateAgentPermissions(cloudId: String!): AgentStudioAgentCreatePermissionsConnection
+Retrieve the create agent permission
+
+agentStudio_validateScenario(
+cloudId: String!
+id: ID!
+containerId: ID!
+): AgentStudioScenarioValidationPayload
+agentStudio_validateScenarios(cloudId: String!input: AgentStudioScenarioValidateModeInput!): AgentStudioScenarioValidateModeOutput
+intentdetection_getIntent(
+accountId: ID
+cloudId: ID
+query: String
+locale: String
+): IntentDetectionResponse
+Method to get the detected intent for an incoming query
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+confluence:atlassian-external
+ptpage(
+enablePaging: Boolean = true
+id: ID
+pageTree: Int
+spaceKey: String
+status: [PTGraphQLPageStatus]
+): PTPage
+Get a page and its paginated children and ancestors
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+appStorage_sqlDatabase(input: AppStorageSqlDatabaseInput!): AppStorageSqlDatabasePayload
+appStorage_sqlTableData(input: AppStorageSqlTableDataInput!): AppStorageSqlTableDataPayload
+appStorage_admin(appId: ID!): AppStorageAdmin
+bitbucket: BitbucketQuery
+opsgenie: OpsgenieQuery
+The field is not available for OAuth authenticated requests
+channelPlatform_sampleQueueById(id: ID): ChannelPlatformSampleQueue
+Sample Query until we get some real APIs on this service
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+read:servicedesk-request
+read:request:jira-service-management
+channelPlatform_listQueues: [ChannelPlatformConnectQueue]
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+read:servicedesk-request
+read:request:jira-service-management
+channelPlatform_getQueue(id: ID): ChannelPlatformConnectQueue
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+read:servicedesk-request
+read:request:jira-service-management
+channelPlatform_evaluateChannelAvailability(request: ChannelPlatformChannelAvailabilityRequestInput): ChannelPlatformChannelAvailabilityResponse
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+read:servicedesk-request
+read:request:jira-service-management
+channelPlatform_getChannelToken(request: ChannelPlatformGetChannelTokenRequest): ChannelPlatformGetChannelTokenResponse
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+read:servicedesk-request
+read:request:jira-service-management
+channelPlatform_submitRequest(requestType: ChannelPlatformChannelTyperequest: ChannelPlatformSubmitRequestInput): ChannelPlatformSubmitRequestResponse
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+read:servicedesk-request
+read:request:jira-service-management
+channelPlatform_getAgentIdForAaid(aaId: StringinstanceId: String): String
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+read:servicedesk-request
+read:request:jira-service-management
+channelPlatform_getConnectDetails: ChannelPlatformConnectDetails
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+read:servicedesk-request
+read:request:jira-service-management
+channelPlatform_getContactDetails(ticketId: ID): [ChannelPlatformContact]
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+read:servicedesk-request
+read:request:jira-service-management
+channelPlatform_getTranscript(request: ChannelPlatformTranscriptRequest): ChannelPlatformTranscriptResponse
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+read:servicedesk-request
+read:request:jira-service-management
+channelPlatform_getSurveyLink(conversationId: String): ChannelPlatformSurveyLinkResponse
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+read:servicedesk-request
+read:request:jira-service-management
+partnerEarlyAccess: PEAPQueryApi
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "PEAP")' query directive to the 'partnerEarlyAccess' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+loom_comment(id: ID!): LoomComment
+The field is not available for OAuth authenticated requests
+loom_comments(ids: [ID!]!): [LoomComment]
+The field is not available for OAuth authenticated requests
+loom_foldersSearch(
+siteId: ID!
+query: String
+spaceId: ID
+includeDefaultFolders: Boolean = false
+): [LoomFolder]
+The field is not available for OAuth authenticated requests
+loom_meeting(id: ID!): LoomMeeting
+The field is not available for OAuth authenticated requests
+loom_meetings(ids: [ID!]!): [LoomMeeting]
+The field is not available for OAuth authenticated requests
+loom_meetingRecurrence(id: ID!): LoomMeetingRecurrence
+The field is not available for OAuth authenticated requests
+loom_meetingRecurrences(ids: [ID!]!): [LoomMeetingRecurrence]
+The field is not available for OAuth authenticated requests
+loom_meetingsSearch(id: ID!): LoomMeetings
+The field is not available for OAuth authenticated requests
+loom_primaryAuthTypeForEmail(email: String!): LoomUserPrimaryAuthType
+The field is not available for OAuth authenticated requests
+loom_settings(siteId: ID!): LoomSettings
+The field is not available for OAuth authenticated requests
+loom_space(id: ID!): LoomSpace
+The field is not available for OAuth authenticated requests
+loom_spaces(ids: [ID!]!): [LoomSpace]
+The field is not available for OAuth authenticated requests
+loom_spacesSearch(siteId: ID!query: String): [LoomSpace]
+The field is not available for OAuth authenticated requests
+loom_video(id: ID!): LoomVideo
+The field is not available for OAuth authenticated requests
+loom_videoDurations(id: ID!): LoomVideoDurations
+The field is not available for OAuth authenticated requests
+loom_videos(ids: [ID!]!): [LoomVideo]
+The field is not available for OAuth authenticated requests
+loom_workspaceTrendingVideos(id: ID!): [LoomVideo]
+loom_joinableWorkspaces: [LoomJoinableWorkspace]
+The field is not available for OAuth authenticated requests
+assets_objectTypesByIds(ids: [ID!]!): [AssetsObjectType]
+assets_objectsByIds(ids: [ID!]!): [AssetsObject]
+assets_schemasByIds(ids: [ID!]!): [AssetsSchema]
+confluence_mediaTokenData(noteId: ID!): ConfluenceMediaTokenData
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_note(id: ID!): NoteResponse
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_notesByProductLink(
+after: String
+first: Int = 20
+orderBy: ConfluenceNotesOrdering
+productLink: ID!
+): NoteConnection
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+notesByCreator(
+after: String
+cloudId: ID
+first: Int = 20
+input: NotesByCreatorInput
+orderBy: ConfluenceNotesOrdering
+): NoteConnection
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+tenant: Tenant
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+collabContext_workspaceIsConnectedToWorkspace(id: ID!): CollabContextWorkspaceConnection
+Get all the connected workspaces for the given workspace ARI.
+This query is experimental and subject to change in the future.
+Please contact #collab-exp-alloy-help if you have any questions.
+
+connectionManager_connectionsByJiraProject(jiraProjectARI: Stringfilter: ConnectionManagerConnectionsFilter): ConnectionManagerConnectionsByJiraProjectResult
+Retrieve all connections for this Jira Project
+
+The field is not available for OAuth authenticated requests
+cpls_capacityPlanningPeopleView(id: ID!): CplsCapacityPlanningPeopleView
+Get a capacity planning people view using its ID
+We will need to register people-view ARI later when we know how it looks like
+Currently, it does not exist
+
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "Cpls")' query directive to the 'cpls_capacityPlanningPeopleView' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+cpls_customContributionTargets(ids: [ID!]!): [CplsCustomContributionTarget!]!
+Get a list of custom contribution targets by IDs
+
+codeInJira(cloudId: ID!): CodeInJira
+The field is not available for OAuth authenticated requests
+partner: Partner
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+api_access
+jira_isRovoLLMEnabled(cloudId: ID!): Boolean
+Whether Rovo LLM features has been enabled for a Jira site.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+Field lifecycle
+This field is in the 'BETA' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "JiraAtlassianIntelligence")' query directive to the 'jira_isRovoLLMEnabled' field, or to any of its parents.
+
+The field is somewhat stable, but it can still go through changes without having to undergo the official deprecation policy. Clients should use it with care and at their own risk!
+
+jira: JiraQuery
+this field is added to enable self governed onboarding of Jira GraphQL types to AGG
+see https://hello.atlassian.net/wiki/spaces/PSRV/pages/1010287708/Announcing+self+governed+APIs for more details
+
+jira_projectsSidebarMenu(cloudId: ID!currentURL: URL): JiraProjectsSidebarMenu
+Fetches the sidebar menu settings for the current user.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "JiraSidebarMenu")' query directive to the 'jira_projectsSidebarMenu' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+jira_projectByIdOrKey(cloudId: ID!idOrKey: String!): JiraProject
+Retrieves a JiraProject given either its project ID (Long) or key.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+jira_projectTypesByIds(ids: [ID!]!): [JiraProjectTypeDetails]
+Retrieves project types by their ARIs
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+jira_categoryField(cloudId: ID!): JiraJqlField
+Returns the Jira Work Management 'category' custom field for use in JQL.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+jira_jiraServiceManagementDefaultCommentBehavior(cloudId: ID!): JiraServiceManagementDefaultCommentBehavior
+Get the default comment behavior for an instance.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "JiraServiceManagementDefaultCommentBehavior")' query directive to the 'jira_jiraServiceManagementDefaultCommentBehavior' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+jira_fieldSchemes(
+cloudId: ID!
+first: Int
+after: String
+input: JiraFieldSchemesInput
+): JiraFieldSchemesConnection
+Returns field schemes that link fields to projects. It allows to filter schemes by name or description.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "JiraFieldSchemes")' query directive to the 'jira_fieldSchemes' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+jira_creatableGlobalCustomFieldTypes(
+cloudId: ID!
+first: Int
+after: String
+): JiraCustomFieldTypeConnection
+List of global custom field types that the user making the request can choose from when creating a new field
+Both 'first' and 'after' are optional
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "JiraCustomFieldsManagement")' query directive to the 'jira_creatableGlobalCustomFieldTypes' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+jira_boardView(input: JiraBoardViewInput!): JiraBoardView
+Returns the data for a Jira board view.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+jira_boardViewCellsByIds(ids: [ID!]!): [JiraBoardViewCell]
+Returns list of board cells based on the ARI list provided.
+
+jira_fieldSchemeAssociatedFields(
+cloudId: ID!
+first: Int
+after: String
+input: JiraFieldSchemeAssociatedFieldsInput
+): JiraFieldSchemeAssociatedFieldsConnection
+This contains the fields associated with a field scheme.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "JiraFieldSchemeAssociatedFields")' query directive to the 'jira_fieldSchemeAssociatedFields' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+jira_fieldSchemeAvailableFields(
+cloudId: ID!
+first: Int
+after: String
+input: JiraFieldSchemeAvailableFieldsInput
+): JiraFieldConnection
+This returns fields which are available to be associated with a field scheme.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "JiraFieldSchemeAvailableFields")' query directive to the 'jira_fieldSchemeAvailableFields' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+jira_projectLevelSidebarMenuCustomization(cloudId: ID!projectId: ID!): JiraProjectLevelSidebarMenuCustomizationResult
+Fetches the project-level sidebar menu settings for the current user.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "JiraProjectLevelSidebarMenuCustomization")' query directive to the 'jira_projectLevelSidebarMenuCustomization' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+jira_issueSearchViewsByIds(ids: [ID!]!): [JiraIssueSearchView]
+Retrieves issueSearchViewResult list from 'ari:cloud:jira:{siteId}:issue-search-view/activation/{activationId}/{namespaceId}/{viewId}' ARI list provided.
+The ARI contains cloudId, namespace and viewId
+This query will error if the ids parameter is not in ARI format, does not pass validation or does not correspond to a JiraIssueSearchView.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+jira_boardsByIds(ids: [ID!]!): [JiraBoard]
+Returns a list of boards, by board ARI
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+jira_issuesByIds(ids: [ID!]!): [JiraIssue]
+Returns Issues given a list of Issue ARIs (up to 100).
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+jira_onboardingConfigs(cloudId: ID!): JiraOnboardingConfigConnection
+Gets all jira onboarding configurations for a tenant.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+Field lifecycle
+This field is in the 'BETA' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "JiraOnboardingConfig")' query directive to the 'jira_onboardingConfigs' field, or to any of its parents.
+
+The field is somewhat stable, but it can still go through changes without having to undergo the official deprecation policy. Clients should use it with care and at their own risk!
+
+jira_onboardingConfigById(cloudId: ID!id: ID!): JiraOnboardingConfig
+Get jira onboarding configuration by id.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+Field lifecycle
+This field is in the 'BETA' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "JiraOnboardingConfig")' query directive to the 'jira_onboardingConfigById' field, or to any of its parents.
+
+The field is somewhat stable, but it can still go through changes without having to undergo the official deprecation policy. Clients should use it with care and at their own risk!
+
+jira_onboardingConfigByTarget(
+cloudId: ID!
+targetType: String!
+targetValue: String!
+): JiraOnboardingConfig
+Get jira onboarding configuration by target type and value.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+Field lifecycle
+This field is in the 'BETA' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "JiraOnboardingConfig")' query directive to the 'jira_onboardingConfigByTarget' field, or to any of its parents.
+
+The field is somewhat stable, but it can still go through changes without having to undergo the official deprecation policy. Clients should use it with care and at their own risk!
+
+agentAI_summarizeIssue(issueId: StringcloudId: ID!): AgentAIIssueSummaryResult
+agentAI_contextPanel(issueId: StringcloudId: ID!): AgentAIContextPanelResult
+appStoredEntity(
+contextAri: ID
+key: ID!
+encrypted: Boolean
+): AppStoredEntity
+Get an untyped entity in a specific context given a key
+
+Keys must be between 1-100 characters long and must match the following pattern /^[a-zA-Z0-9:._\s-]+$/
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+storage:app
+appStoredEntities(
+contextAri: ID
+where: [AppStoredEntityFilter!]
+first: Int
+after: String
+): AppStoredEntityConnection
+Get an list of untyped entity in a specific context, optional query parameters where condition, first and after
+
+where condition to filter
+returns the first N entities when queried. Should not exceed 20
+this is a cursor after which (exclusive) the data should be fetched from
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+storage:app
+appStoredCustomEntity(
+contextAri: ID
+entityName: String!
+key: ID!
+): AppStoredCustomEntity
+Get an entity in a specific context given an entity name and entity key
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+storage:app
+appStoredCustomEntities(
+contextAri: ID
+entityName: String!
+indexName: String!
+partition: [AppStoredCustomEntityFieldValue!]
+range: AppStoredCustomEntityRange
+filters: AppStoredCustomEntityFilters
+sort: SortOrder
+limit: Int
+cursor: String
+): AppStoredCustomEntityConnection
+Get an list of custom entity in a specific context
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+storage:app
+ersLifecycle: ErsLifecycleQuery
+ERS lifecycle operations
+
+appAdmin(appId: ID!): AppAdminQuery
+App admin operations
+
+polarisInsights(project: ID!container: ID): [PolarisInsight!]
+THIS OPERATION IS IN BETA
+
+Beta Field
+This field is currently in a beta phase and may change without notice.
+
+To use this field you must set a X-ExperimentalApi: polaris-v0 HTTP header.
+
+Use of this header indicates that they are opting into the experimental preview of this field.
+
+If you do not set this header then the request will be rejected outright.
+
+Once the field moves out of the beta phase, then the header will no longer be required or checked.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+read:jira-work
+polarisInsight(id: ID!): PolarisInsight
+THIS OPERATION IS IN BETA
+
+Beta Field
+This field is currently in a beta phase and may change without notice.
+
+To use this field you must set a X-ExperimentalApi: polaris-v0 HTTP header.
+
+Use of this header indicates that they are opting into the experimental preview of this field.
+
+If you do not set this header then the request will be rejected outright.
+
+Once the field moves out of the beta phase, then the header will no longer be required or checked.
+
+The field is not available for OAuth authenticated requests
+polarisInsightsWithErrors(project: ID!): [PolarisInsight!]
+THIS OPERATION IS IN BETA
+
+Beta Field
+This field is currently in a beta phase and may change without notice.
+
+To use this field you must set a X-ExperimentalApi: polaris-v0 HTTP header.
+
+Use of this header indicates that they are opting into the experimental preview of this field.
+
+If you do not set this header then the request will be rejected outright.
+
+Once the field moves out of the beta phase, then the header will no longer be required or checked.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+read:jira-work
+polarisLabels(projectID: ID!): [LabelUsage!]
+THIS OPERATION IS IN BETA
+
+Beta Field
+This field is currently in a beta phase and may change without notice.
+
+To use this field you must set a X-ExperimentalApi: polaris-v0 HTTP header.
+
+Use of this header indicates that they are opting into the experimental preview of this field.
+
+If you do not set this header then the request will be rejected outright.
+
+Once the field moves out of the beta phase, then the header will no longer be required or checked.
+
+The field is not available for OAuth authenticated requests
+polarisSnippetPropertiesConfig(
+project: ID!
+oauthClientId: String!
+groupId: String!
+): PolarisSnippetPropertiesConfig
+THIS OPERATION IS IN BETA
+
+Beta Field
+This field is currently in a beta phase and may change without notice.
+
+To use this field you must set a X-ExperimentalApi: polaris-v0 HTTP header.
+
+Use of this header indicates that they are opting into the experimental preview of this field.
+
+If you do not set this header then the request will be rejected outright.
+
+Once the field moves out of the beta phase, then the header will no longer be required or checked.
+
+The field is not available for OAuth authenticated requests
+polarisGetEarliestOnboardedProjectForCloudId(id: ID!): EarliestOnboardedProjectForCloudId
+THIS OPERATION IS IN BETA
+
+Beta Field
+This field is currently in a beta phase and may change without notice.
+
+To use this field you must set a X-ExperimentalApi: polaris-v0 HTTP header.
+
+Use of this header indicates that they are opting into the experimental preview of this field.
+
+If you do not set this header then the request will be rejected outright.
+
+Once the field moves out of the beta phase, then the header will no longer be required or checked.
+
+The field is not available for OAuth authenticated requests
+polarisProject(id: ID!skipRefresh: Boolean): PolarisProject
+THIS QUERY IS IN BETA
+
+Beta Field
+This field is currently in a beta phase and may change without notice.
+
+To use this field you must set a X-ExperimentalApi: polaris-v0 HTTP header.
+
+Use of this header indicates that they are opting into the experimental preview of this field.
+
+If you do not set this header then the request will be rejected outright.
+
+Once the field moves out of the beta phase, then the header will no longer be required or checked.
+
+The field is not available for OAuth authenticated requests
+polarisCollabToken(viewID: ID!): PolarisDelegationToken
+THIS OPERATION IS IN BETA
+
+Beta Field
+This field is currently in a beta phase and may change without notice.
+
+To use this field you must set a X-ExperimentalApi: polaris-v0 HTTP header.
+
+Use of this header indicates that they are opting into the experimental preview of this field.
+
+If you do not set this header then the request will be rejected outright.
+
+Once the field moves out of the beta phase, then the header will no longer be required or checked.
+
+The field is not available for OAuth authenticated requests
+polaris: PolarisQueryNamespace
+polarisIdeaTemplates(project: ID!): [PolarisIdeaTemplate!]
+THIS OPERATION IS IN BETA
+
+The field is not available for OAuth authenticated requests
+polarisGetReactions(input: PolarisGetReactionsInput!): [PolarisReaction]
+THIS OPERATION IS IN BETA
+
+The field is not available for OAuth authenticated requests
+Field lifecycle
+This field is in the 'BETA' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "polaris-v0")' query directive to the 'polarisGetReactions' field, or to any of its parents.
+
+The field is somewhat stable, but it can still go through changes without having to undergo the official deprecation policy. Clients should use it with care and at their own risk!
+
+polarisGetDetailedReaction(input: PolarisGetDetailedReactionInput!): PolarisReactionSummary
+THIS OPERATION IS IN BETA
+
+The field is not available for OAuth authenticated requests
+Field lifecycle
+This field is in the 'BETA' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "polaris-v0")' query directive to the 'polarisGetDetailedReaction' field, or to any of its parents.
+
+The field is somewhat stable, but it can still go through changes without having to undergo the official deprecation policy. Clients should use it with care and at their own risk!
+
+polarisView(id: ID!): PolarisView
+THIS QUERY IS IN BETA
+
+Beta Field
+This field is currently in a beta phase and may change without notice.
+
+To use this field you must set a X-ExperimentalApi: polaris-v0 HTTP header.
+
+Use of this header indicates that they are opting into the experimental preview of this field.
+
+If you do not set this header then the request will be rejected outright.
+
+Once the field moves out of the beta phase, then the header will no longer be required or checked.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+read:jira-work
+polarisViewArrangementInfo(id: ID!): JSON
+THIS OPERATION IS IN BETA
+
+Beta Field
+This field is currently in a beta phase and may change without notice.
+
+To use this field you must set a X-ExperimentalApi: polaris-v0 HTTP header.
+
+Use of this header indicates that they are opting into the experimental preview of this field.
+
+If you do not set this header then the request will be rejected outright.
+
+Once the field moves out of the beta phase, then the header will no longer be required or checked.
+
+The field is not available for OAuth authenticated requests
+settings_navigationCustomisation(entityAri: IDownerAri: ID): SettingsNavigationCustomisation
+For fetching navigation customisation settings by entityAri and ownerAri
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+confluence:atlassian-external
+dvcs: DvcsQuery
+The field is not available for OAuth authenticated requests
+webTriggerUrlsByAppContext(
+appId: ID!
+envId: ID!
+contextId: ID!
+): [WebTriggerUrl!]
+Gets all webtrigger URLs for an application in a specified context.
+
+The field is not available for OAuth authenticated requests
+migrationCatalogue: MigrationCatalogueQuery!
+Queries under namespace migrationCatalogue.
+
+productListings(ids: [ID!]!locales: [ID!]): [ProductListingResult!]!
+Get List of App Listings by reference ID and locale. For all fields with the type [LocalisedString] a value will be returned for each requested locale. If no locales are provided it will default to english (en-US). If a provided locale is not supported it will default to english (en-US).
+Locale codes must be in the RFC 5646 format, supported values are:
+'en-GB','en-US','cs','da','de','es','fi','fr','hu','it','ja','ko','nb','nl','pl','pt-BR','ru','sv','th','tr','uk','vi','zh-TW','zh-CN'
+
+The field is not available for OAuth authenticated requests
+migration: MigrationQuery!
+Queries under namespace migration.
+
+jira_backlog(boardId: ID!): JiraBacklog
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+compass: CompassCatalogQueryApi
+insights: Insights
+The field is not available for OAuth authenticated requests
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "Insights")' query directive to the 'insights' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+workSuggestions: WorkSuggestions
+The field is not available for OAuth authenticated requests
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "WorkSuggestions")' query directive to the 'workSuggestions' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+lpLearnerData: LpLearnerData
+mercury: MercuryQueryApi
+The field is not available for OAuth authenticated requests
+mercury_providerOrchestration: MercuryProviderOrchestrationQueryApi
+The field is not available for OAuth authenticated requests
+mercury_strategicEvents: MercuryStrategicEventsQueryApi
+The field is not available for OAuth authenticated requests
+mercury_jiraAlignProvider: MercuryJiraAlignProviderQueryApi
+The field is not available for OAuth authenticated requests
+devOpsMetrics: DevOpsMetrics
+The field is not available for OAuth authenticated requests
+growthUnifiedProfile_getEntitlementProfile(entitlementId: ID!): GrowthUnifiedProfileEntitlementProfileResult
+Get entitlement profile by entitlement id
+
+growthUnifiedProfile_getOrgProfile(filter: GrowthUnifiedProfileOrgProfileFilterInputorgId: ID!): GrowthUnifiedProfileOrgProfileResult
+Get org profile by org id
+
+growthUnifiedProfile_getUnifiedProfile(
+accountId: ID
+anonymousId: ID
+tenantId: ID
+): GrowthUnifiedProfileResult
+growthUnifiedProfile_getUnifiedUserProfile(
+id: String!
+idType: GrowthUnifiedProfileUserIdType!
+where: GrowthUnifiedProfileGetUnifiedUserProfileWhereInput
+): GrowthUnifiedProfileUserProfileResult
+Get unified user profile by ID and ID type
+
+growthUnifiedProfile_siteProfile(tenantId: ID!): GrowthUnifiedProfileSiteProfileResult
+Get site profile by tenant id
+
+classificationLevel(id: String!): ContentDataClassificationLevel
+GraphQL query to get a hydrated classification level object using level ID.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+collabDraft(
+draftShareId: String = ""
+format: CollabFormat! = PM
+hydrateAdf: Boolean = false
+id: ID!
+): CollabDraft
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+comments(
+after: String
+before: String
+cloudId: ID
+commentId: ID
+confluenceCommentFilter: ConfluenceCommentFilter
+contentStatus: [GraphQLContentStatus]
+depth: Depth = ALL
+first: Long = 250
+inlineMarkerRef: String
+inlineMarkerRefList: [String]
+last: Long = 250
+location: [String]
+pageId: ID
+recentFirst: Boolean = false
+singleThreaded: Boolean = false
+type: [CommentType]
+): PaginatedCommentList
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluenceUsers(
+accountIds: [String]
+limit: Int = 200
+start: Int
+): PaginatedPersonList
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_applicationLinkByOauth2ClientId(cloudId: ID!oauthClientId: String!): ConfluenceApplicationLink
+Fetch application link by OAuth 2.0 client id
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_assignableSpaceRoles(cloudId: ID!types: [ConfluenceAssignableSpaceRolePrincipalType]!): [ConfluenceAssignableSpaceRole]
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_calendarJiraDateFieldsByJql(
+applicationId: ID!
+cloudId: ID!
+jql: String!
+): [ConfluenceCalendarJiraDateField]
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_calendarJiraDateFieldsBySearchFilter(
+applicationId: ID!
+cloudId: ID!
+searchFilterId: ID!
+): [ConfluenceCalendarJiraDateField]
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_categorizeNbmChains(cloudId: ID!nbmChains: [[String]]!): ConfluenceCategorizeNbmChainsResult
+Get categorization of NBM Chains
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_contentAccessRequestByStatus(
+after: String
+cloudId: ID!
+contentId: ID!
+first: Int = 10
+status: ConfluenceContentAccessRequestStatus
+): ConfluenceContentAccessRequestConnection
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_contentReactionsSummary(
+cloudId: ID!
+contentId: ID!
+contentType: GraphQLReactionContentType!
+): ConfluenceReactionSummary
+Fetch and return a summary of reactions for a single content item.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_contentSmartLinksForDraft(
+after: String
+first: Int = 100
+id: ID!
+): PaginatedSmartLinkList
+Fetches all smart-links on a draft and returns a paginated list of results
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_contents(ids: [ID]!): [Content]
+Fetches a list of contents by their ARIs.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_contextualTitleEmoji(pageAri: ID!pageTitle: String!): String
+Returns a contextual emoji based on the page title
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_csvExportDownloadLink(cloudId: ID!taskId: String!): String
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_dataLifecycleManagementPolicy(cloudId: ID!): ConfluenceDataLifecycleManagementPolicy
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_expandTypeFromJira(cloudId: ID!): ConfluenceExpandTypeFromJira
+Indicates if Confluence was provisioned standalone as a land product or via Jira as a cross-flow product, check confluence transformer for details
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_expert(cloudId: ID!id: ID!): ConfluenceExpert
+Get a confluence expert.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_expertsByTopic(
+after: String
+cloudId: ID!
+first: Int
+topicId: ID
+topicName: String
+): ConfluenceExpertConnection
+Get experts for a specific topic, identified by name or by id with preference for the name.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_expertsOfAllTime(
+after: String
+cloudId: ID!
+first: Int
+): ConfluenceExpertConnection
+Get the experts of all time.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_expertsOfWeek(
+after: String
+cloudId: ID!
+first: Int
+numWeeks: Int!
+): ConfluenceExpertConnection
+Get the experts of the week.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_forgeExtensionsByType(
+cloudId: ID!
+context: ConfluenceExtensionRenderingContextInput
+includeHidden: Boolean
+locale: String
+types: [String]
+): [ConfluenceForgeExtension]
+GraphQL query to retrieve extensions based on specified types
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_generateSpaceKey(cloudId: ID!spaceName: String): ConfluenceGeneratedSpaceKey
+Generates a unique space key for the given space name
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_getWacTemplate(cloudId: ID!): ConfluenceWacTemplate
+Return blueprint id for selected wac template
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_hasClearPermissionForSpace(cloudId: ID!spaceKey: String!): Boolean
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_hasDivergedFromDefaultSpacePermissions(cloudId: ID!spaceKey: String!): Boolean
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_isPrivacyModeEnabled(cloudId: ID!): ConfluencePrivacyMode
+Fetches isPrivacyModeEnabled global settings attribute
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_loomEntryPoints(cloudId: ID!): ConfluenceLoomEntryPoints
+Get the Loom entry points configuration
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_macrosByIds(
+cloudId: ID!
+contentId: ID!
+macroIds: [ID]!
+): [Macro]
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_pdfExportTask(cloudId: ID!id: ID!): ConfluencePdfExportTask
+Fetch data about a given PDF export task.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_questionsConfiguration(cloudId: ID!): ConfluenceQuestionsConfiguration
+Returns the configuration for Confluence Questions.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_reactedUsers(cloudId: ID!input: ConfluenceReactedUsersInput!): ConfluenceReactedUsersResponsePayload
+Retrieves users who reacted with an emoji on content.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_reactionsSummaries(ids: [ID]!): [ReactionsSummaryResponse]
+Fetch and return a list of reaction summaries for content.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_reactionsSummary(
+cloudId: ID
+contentId: ID!
+contentType: GraphQLReactionContentType!
+): ConfluenceReactionSummary
+Fetch and return a summary of reactions for content.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_search(
+after: String
+before: String
+cloudId: ID
+cql: String!
+cqlcontext: String
+disableArchivedSpaceFallback: Boolean = false
+excerpt: String = "highlight"
+excludeCurrentSpaces: Boolean = false
+first: Int = 25
+includeArchivedSpaces: Boolean = false
+last: Int = 25
+offset: Int
+): ConfluenceSearchConnection
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_searchUser(
+after: String
+cloudId: ID
+cql: String!
+first: Int = 25
+offset: Int
+sitePermissionTypeFilter: String = "none"
+): ConfluenceSearchConnection
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_spaceRoleMode(cloudId: ID!): ConfluenceSpaceRoleMode
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_storage(cloudId: ID): ConfluenceStorage
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_template(cloudId: IDcontentTemplateId: String!): ContentTemplate
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_tenantContext(cloudId: ID): ConfluenceTenantContext
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_topic(
+cloudId: ID!
+id: Long
+name: String
+): ConfluenceTopic
+Fetch topic by ID or name
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_topics(
+after: String
+cloudId: ID!
+featured: Boolean
+first: Int = 25
+namePattern: String = ""
+): ConfluenceTopicConnection
+Fetch topics with option to filter for featured topics and search text
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_userClasses(
+after: String
+cloudId: ID!
+first: Int = 25
+): ConfluenceUserClassConnection
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+confluence_usersHavePermission(
+cloudId: ID!
+permission: String!
+principalIds: [String]!
+resourceId: ID!
+resourceType: String!
+): ConfluenceUsersHavePermissionList
+List of user permission decisions.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+content(
+after: String
+cloudId: ID
+draftShareId: String
+embeddedContentRender: String = "current"
+first: Int = 25
+id: ID
+ids: [ID]
+navigationType: String
+offset: Int
+orderby: String
+postingDay: String
+shareToken: String
+spaceKey: String
+status: [String]
+title: String
+trigger: String
+type: String = "page"
+version: Int
+): PaginatedContentListWithChild
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+contentContributors(
+after: String
+first: Int
+id: ID!
+limit: Int = 10
+offset: Int
+status: [String]
+version: Int = 0
+): ContentContributors
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+contentReactionsSummary(
+cloudId: ID
+contentId: ID!
+contentType: String!
+): ReactionsSummaryResponse
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+dataSecurityPolicy(cloudId: ID): Confluence_dataSecurityPolicy
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+experimentFeatures: String
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+externalCollaboratorDefaultSpace: ExternalCollaboratorDefaultSpace
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+futureContentTypeMobileSupport(
+contentType: String!
+locale: String!
+mobilePlatform: MobilePlatform!
+): FutureContentTypeMobileSupport
+Check if the specific content type is supported now by the latest mobile app in iOS/android app stores.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+globalContextContentCreationMetadata: ContentCreationMetadata
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+inlineTasks(tasksQuery: InlineTasksByMetadata!): InlineTasksQueryResult
+Fetch all Tasks matching a given set of Task metadata filters, such as: completion status, due date, assignee, creator, created date, etc.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+jiraServers: JiraServersResult
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+labelSearch(
+contentId: ID
+ignoreRelated: Boolean
+limit: Int = 50
+searchText: String!
+spaceKey: String
+): LabelSearchResults
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+macroBodyRenderer(
+adf: String!
+containedRender: Boolean = false
+contentId: ID
+mode: ContentRendererMode = RENDERER
+outputDeviceType: OutputDeviceType
+): MacroBody
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+macros(
+after: String
+blocklist: [String]
+contentId: ID!
+first: Int
+refetchToken: String
+): MacroConnection
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+mediaConfiguration: MediaConfiguration
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+organization: Organization
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+page(
+enablePaging: Boolean = false
+id: ID!
+pageTree: Int
+): Page
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+pages(
+limit: Int = 25
+pageId: ID
+parentPageId: ID
+spaceKey: String
+start: Int
+status: [GraphQLPageStatus]
+title: String
+): PaginatedPageList
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+publicLinkInformation(cloudId: IDid: ID!): PublicLinkInformation
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+publicLinksByCriteria(
+after: String
+first: Int
+isAscending: Boolean
+orderBy: PublicLinksByCriteriaOrder
+spaceId: ID!
+status: [PublicLinkStatus]
+title: String
+type: [String]
+): PublicLinkConnection
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+pushNotificationSettings: ConfluencePushNotificationSettings
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+reactedUsers(
+cloudId: ID
+containerId: String!
+containerType: ContainerType!
+contentId: String!
+contentType: GraphQLReactionContentType!
+emojiId: String!
+): ReactedUsersResponse
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+reactionsSummary(
+cloudId: ID
+containerId: ID!
+containerType: String = "content"
+contentId: ID!
+contentType: String!
+): ReactionsSummaryResponse
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+reactionsSummaryList(ids: [ReactionsId]!): [ReactionsSummaryResponse]
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+renderedMacro(
+adf: String!
+contentId: ID!
+mode: MacroRendererMode = RENDERER
+): RenderedMacro
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+singleContent(
+cloudId: ID
+id: ID
+shareToken: String
+status: [String]
+validatedShareToken: String
+): Content
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+siteOperations(cloudId: ID): SiteOperations
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+siteSettings(cloudId: ID): SiteSettings
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+space(
+cloudId: ID
+id: ID
+identifier: ID
+key: String
+pageId: ID
+): Space
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+spaceContextContentCreationMetadata(spaceKey: String!): ContentCreationMetadata
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+spaces(
+after: String
+assignedToGroupId: String
+assignedToGroupName: String
+assignedToUser: String
+cloudId: ID
+creatorAccountIds: [String]
+excludeTypes: String = "system"
+favourite: Boolean
+favouriteUserAccountId: String
+favouriteUserKey: String
+first: Int = 25
+label: [String]
+offset: Int
+spaceId: Long
+spaceIds: [Long]
+spaceKey: String
+spaceKeys: [String]
+spaceNamePattern: String = ""
+status: String
+type: String
+watchedByAccountId: String
+watchedSpacesOnly: Boolean
+): PaginatedSpaceList
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+stalePages(
+cursor: String
+includePagesWithChildren: Boolean = false
+lastActivityEarlierThan: String!
+limit: Int = 25
+pageStatus: StalePageStatus = CURRENT
+sort: StalePagesSortingType = ASC
+spaceId: ID!
+): PaginatedStalePagePayloadList
+Calls the cc-analytics stale pages API. lastActivityEarlierThan expects an ISO 8061 date string. Ex: 2023-12-08T20:55:25.000Z
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+userAccessStatus(cloudId: ID): AccessStatus
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+userGroupSearch(
+cloudId: ID
+maxResults: Int
+query: String
+sitePermissionTypeFilter: SitePermissionTypeFilter = NONE
+): GraphQLUserAndGroupSearchResults
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+userPreferences(cloudId: ID): UserPreferences
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+userWithContentRestrictions(accountId: StringcontentId: ID): UserWithRestrictions
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+webItemSections(
+contentId: ID
+key: String
+location: String
+locations: [String]
+version: Int
+): [WebSection]
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+aquaOutgoingEmailLogs(cloudId: ID!): AquaOutgoingEmailLogsQueryApi
+shepherd: ShepherdQuery
+Main group of Guard Detect queries.
+
+shepherdTeamworkGraph: ShepherdTeamworkGraphQueries
+[Internal] Group of queries that implements the TeamworkGraph contract.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+identity:atlassian-external
+helpObjectStore(cloudId: ID = null): HelpObjectStoreQueryApi
+The field is not available for OAuth authenticated requests
+helpObjectStore_searchArticles(
+cloudId: ID!
+helpCenterAri: ID
+queryTerm: String
+limit: Int!
+portalIds: [String!]
+categoryIds: [String!]
+skipRestrictedPages: Boolean = false
+highlight: Boolean = false
+): HelpObjectStoreArticleSearchResponse
+To search for Knowledge Base articles including External resources. Should not be used for paginating through articles.
+
+The field is not available for OAuth authenticated requests
+helpObjectStore_searchRequestTypes(
+cloudId: ID!
+helpCenterAri: ID
+queryTerm: String!
+limit: Int!
+portalId: String
+): HelpObjectStoreRequestTypeSearchResponse
+To search for Request types including External resources.
+
+The field is not available for OAuth authenticated requests
+helpObjectStore_searchPortals(
+cloudId: ID!
+helpCenterAri: ID
+queryTerm: String!
+limit: Int!
+): HelpObjectStorePortalSearchResponse
+To search for Portals including External resources.
+
+The field is not available for OAuth authenticated requests
+helpObjectStore_searchArticlesForSupportSite(
+cloudId: String!
+helpCenterAri: String!
+first: Int
+after: String
+input: HelpObjectStoreSupportSiteArticleSearchInput
+): HelpObjectStoreSupportSiteArticleSearchResultConnection
+The field is not available for OAuth authenticated requests
+spf_ask(id: ID!): SpfAskResult
+Gets an ask for an id.
+
+The field is not available for OAuth authenticated requests
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "Spf")' query directive to the 'spf_ask' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+spf_asksByIds(ids: [ID!]!): [SpfAsk]
+Gets a list of asks by ids
+
+The field is not available for OAuth authenticated requests
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "Spf")' query directive to the 'spf_asksByIds' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+spf_asks(
+cloudId: ID!
+first: Int
+after: String
+q: String
+): SpfAskConnection
+Filters a list of asks based on query.
+
+The field is not available for OAuth authenticated requests
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "Spf")' query directive to the 'spf_asks' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+spf_askCommentsByIds(ids: [ID!]!): [SpfAskComment]
+Gets a list of ask comments by ids
+
+The field is not available for OAuth authenticated requests
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "Spf")' query directive to the 'spf_askCommentsByIds' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+spf_askLinksByIds(ids: [ID!]!): [SpfAskLink]
+Get a list of ask links by ids.
+
+The field is not available for OAuth authenticated requests
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "Spf")' query directive to the 'spf_askLinksByIds' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+spf_resolveImpactedWorkUrl(cloudId: ID!url: String!): SpfResolveImpactedWorkUrlPayload
+Resolve an Impacted Work URL into an ARI.
+
+The field is not available for OAuth authenticated requests
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "Spf")' query directive to the 'spf_resolveImpactedWorkUrl' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+socialSignals: SocialSignalsAPI
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+confluence:atlassian-external
+devOpsService(id: ID!): DevOpsService
+The DevOps Service with the specified ARI
+
+The field is not available for OAuth authenticated requests
+devOpsServiceTiers(cloudId: String!): [DevOpsServiceTier!]
+Retrieve the list of DevOps Service Tiers for the specified site
+
+The field is not available for OAuth authenticated requests
+devOpsServiceTypes(cloudId: String!): [DevOpsServiceType!]
+Retrieve the list of DevOps Service Types
+
+The field is not available for OAuth authenticated requests
+devOpsServices(
+cloudId: String!
+first: Int = 20
+after: String
+filter: DevOpsServicesFilterInput
+): DevOpsServiceConnection
+Retrieve all services for the site specified by cloudId.
+
+The field is not available for OAuth authenticated requests
+devOpsServicesById(ids: [ID!]!): [DevOpsService!]
+Retrieve DevOps Services for the specified ids, the ids can belong to different sites.
+Services not found are simply not returned.
+The maximum lookup limit is 100.
+
+The field is not available for OAuth authenticated requests
+devOpsServiceRelationship(id: ID!): DevOpsServiceRelationship
+The DevOps Service Relationship with the specified ARI
+
+The field is not available for OAuth authenticated requests
+bitbucketRepositoriesAvailableToLinkWithNewDevOpsService(
+cloudId: ID!
+first: Int = 20
+after: String
+nameFilter: String
+): BitbucketRepositoryIdConnection
+For the specified cloudId, retrieve the available Bitbucket repositories to link with a (new) service that has not been created yet.
+If nameFilter is provided, only repositories with names containing this case-insensitive string will be returned.
+With an existing service, the caller should use devOpsService.bitbucketRepositoriesAvailableToLinkWith field.
+
+The field is not available for OAuth authenticated requests
+team: TeamQuery
+Team-related queries
+
+roadmaps: RoadmapsQuery
+Query for grouping the roadmap queries
+
+Beta Field
+This field is currently in a beta phase and may change without notice.
+
+To use this field you must set a X-ExperimentalApi: RoadmapsQuery HTTP header.
+
+Use of this header indicates that they are opting into the experimental preview of this field.
+
+If you do not set this header then the request will be rejected outright.
+
+Once the field moves out of the beta phase, then the header will no longer be required or checked.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+jira:atlassian-external
+tenantContexts(
+cloudIds: [ID!]
+hostNames: [String!]
+activationIds: [ID!]
+): [TenantContext]
+A Jira or Confluence cloud instance, such as hello.atlassian.net has a backing
+cloud ID such as 0ee6b491-5425-4f19-a71e-2486784ad694
+
+This field allows you to look up the cloud IDs or host names of tenanted applications
+such as Jira or Confluence.
+
+You MUST provide a list of either cloud ids or base urls or activation ids to look up
+but only single argument is allowed. If you provide more than one argument, an error will be returned.
+
+sandbox: SandboxQuery!
+Queries under namespace sandbox.
+
+graphStore: GraphStore
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "GraphStore")' query directive to the 'graphStore' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+atlasProjectsLinkedToJiraIssue(issueId: ID!): GraphStoreCypherQueryConnection
+The field is not available for OAuth authenticated requests
+atlasGoalsLinkedToJiraIssue(issueId: ID!): GraphStoreCypherQueryConnection
+The field is not available for OAuth authenticated requests
+atlasProjectsLinkedToAtlasGoal(goalId: ID!): GraphStoreCypherQueryConnection
+The field is not available for OAuth authenticated requests
+contributorsLinkedToAtlasProject(
+projectId: ID!
+first: Int
+after: String
+): GraphStoreCypherQueryConnection
+The field is not available for OAuth authenticated requests
+contributorsLinkedToConfluencePage(
+pageId: ID!
+first: Int
+after: String
+): GraphStoreCypherQueryConnection
+The field is not available for OAuth authenticated requests
+contributorsLinkedToConfluencePageV2(
+pageId: ID!
+first: Int
+after: String
+): GraphStoreCypherQueryConnection
+The field is not available for OAuth authenticated requests
+linksOutgoingFromConfluencePage(pageId: ID!): GraphStoreCypherQueryConnection
+The field is not available for OAuth authenticated requests
+linksIncomingToConfluencePage(pageId: ID!): GraphStoreCypherQueryConnection
+The field is not available for OAuth authenticated requests
+linksIncomingToJiraIssue(issueId: ID!): GraphStoreCypherQueryConnection
+The field is not available for OAuth authenticated requests
+linksOutgoingFromJiraIssue(issueId: ID!): GraphStoreCypherQueryConnection
+The field is not available for OAuth authenticated requests
+collaboratorsLinkedToJiraIssue(
+issueId: ID!
+first: Int
+after: String
+): GraphStoreCypherQueryConnection
+The field is not available for OAuth authenticated requests
+dataScope: MigrationPlanningServiceQuery
+jiraReleases: JiraReleases
+Namespace for fields relating to issue releases in Jira.
+
+A "release" in this context can refer to a code deployment or a feature flag change.
+
+This field is currently in BETA.
+
+The field is not available for OAuth authenticated requests
+oauthClients: OAuthClientsQuery
+isSainSearchEnabled(cloudId: String!): Boolean
+This query is for Confluence Search's Q&A Search (Generative AI) experience.
+It is expected to live alongside the standard search query.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+nlpSearch(
+query: String
+locations: [String!]!
+locale: String
+followups_enabled: Boolean
+experience: String
+additionalContext: String
+): NlpSearchResponse
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+Field lifecycle
+This field is in the 'EXPERIMENTAL' lifecycle stage
+
+To query this field a client will need to add the '@optIn(to: "Nlp Search")' query directive to the 'nlpSearch' field, or to any of its parents.
+
+The field is extremely unstable. It can go through changes at any moment, and its execution can be slow and/or unreliable. Clients should use it with care and at their own risk!
+
+getKeywords(entityAri: StringtextInput: NlpGetKeywordsTextInput): [String!]
+This query is for the Reading Aids experience.
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+objectRecommendations(
+context: CollaborationGraphRequestContext!
+modelRequestParams: ModelRequestParams!
+maxNumberOfResults: Int = 25
+): CollaborationGraphRecommendationResults
+GraphQL endpoint for Cloud Collaboration Graph API
+
+OAuth Scopes
+One of the following scopes will need to be present on OAuth requests to get data from this field
+
+confluence:atlassian-external
+jiraAlignAgg_projectsByAris(ids: [ID!]!): [JiraAlignAggProject]
+The field is not available for OAuth authenticated requests
