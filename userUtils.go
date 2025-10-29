@@ -24,6 +24,10 @@ func loadJiraConfig() {
 		jiraApiFunctions.JiraApiKey = jira
 		jiraApiFunctions.JiraGraphQlBaseUri = jiraGraphQlBaseUri
 	}
+	// Also check for email if provided
+	if email, ok := config["email"].(string); ok {
+		jiraApiFunctions.JiraEmail = email
+	}
 }
 
 func getCurrentUser() *JiraResponse {

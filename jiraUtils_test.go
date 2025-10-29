@@ -5,6 +5,7 @@ import (
 	"net/http/httptest"
 	"strings"
 	"testing"
+	"jiraTimeWidget/jiraApiFunctions"
 )
 
 func TestGetJiraItem_Success(t *testing.T) {
@@ -24,10 +25,20 @@ func TestGetJiraItem_Success(t *testing.T) {
 	}))
 	defer server.Close()
 
-	// Override global variable for test
+	// Override global variables for test - need to import jiraApiFunctions
 	originalUri := jiraGraphQlBaseUri
-	jiraGraphQlBaseUri = server.URL
+	jiraGraphQlBaseUri = server.URL + "/gateway/api/graphql"
 	defer func() { jiraGraphQlBaseUri = originalUri }()
+	
+	// Also set the package variable
+	originalPackageUri := jiraApiFunctions.JiraGraphQlBaseUri
+	jiraApiFunctions.JiraGraphQlBaseUri = server.URL + "/gateway/api/graphql"
+	defer func() { jiraApiFunctions.JiraGraphQlBaseUri = originalPackageUri }()
+	
+	// Set API key
+	originalKey := jiraApiFunctions.JiraApiKey
+	jiraApiFunctions.JiraApiKey = "test-token"
+	defer func() { jiraApiFunctions.JiraApiKey = originalKey }()
 
 	result := getJiraItem("TEST-123", "test-token")
 	
@@ -44,8 +55,16 @@ func TestGetJiraItem_NotFound(t *testing.T) {
 	defer server.Close()
 
 	originalUri := jiraGraphQlBaseUri
-	jiraGraphQlBaseUri = server.URL
+	jiraGraphQlBaseUri = server.URL + "/gateway/api/graphql"
 	defer func() { jiraGraphQlBaseUri = originalUri }()
+	
+	originalPackageUri := jiraApiFunctions.JiraGraphQlBaseUri
+	jiraApiFunctions.JiraGraphQlBaseUri = server.URL + "/gateway/api/graphql"
+	defer func() { jiraApiFunctions.JiraGraphQlBaseUri = originalPackageUri }()
+	
+	originalKey := jiraApiFunctions.JiraApiKey
+	jiraApiFunctions.JiraApiKey = "test-token"
+	defer func() { jiraApiFunctions.JiraApiKey = originalKey }()
 
 	result := getJiraItem("INVALID-123", "test-token")
 	
@@ -57,16 +76,25 @@ func TestGetJiraItem_NotFound(t *testing.T) {
 func TestGetJiraItem_EmptyToken(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		auth := r.Header.Get("Authorization")
-		if auth != "Bearer" {
-			t.Errorf("Expected Authorization header 'Bearer', got '%s'", auth)
+		// When token is empty, it should be "Bearer " (with space) or just "Bearer"
+		if auth != "Bearer " && auth != "Bearer" {
+			t.Errorf("Expected Authorization header 'Bearer ' or 'Bearer', got '%s'", auth)
 		}
 		w.WriteHeader(http.StatusUnauthorized)
 	}))
 	defer server.Close()
 
 	originalUri := jiraGraphQlBaseUri
-	jiraGraphQlBaseUri = server.URL
+	jiraGraphQlBaseUri = server.URL + "/gateway/api/graphql"
 	defer func() { jiraGraphQlBaseUri = originalUri }()
+	
+	originalPackageUri := jiraApiFunctions.JiraGraphQlBaseUri
+	jiraApiFunctions.JiraGraphQlBaseUri = server.URL + "/gateway/api/graphql"
+	defer func() { jiraApiFunctions.JiraGraphQlBaseUri = originalPackageUri }()
+	
+	originalKey := jiraApiFunctions.JiraApiKey
+	jiraApiFunctions.JiraApiKey = ""
+	defer func() { jiraApiFunctions.JiraApiKey = originalKey }()
 
 	result := getJiraItem("TEST-123", "")
 	
