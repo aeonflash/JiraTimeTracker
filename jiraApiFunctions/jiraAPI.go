@@ -2,6 +2,7 @@ package jiraApiFunctions
 
 import (
 	"bytes"
+	"encoding/base64"
 	"encoding/json"
 	"io"
 	"net/http"
@@ -12,6 +13,7 @@ import (
 var (
 	JiraGraphQlBaseUri string
 	JiraApiKey         string
+	JiraEmail          string
 )
 
 // Generic API call function
@@ -46,7 +48,13 @@ func MakeJiraAPICall(method, endpoint string, body interface{}, queryParams map[
 		return nil, err
 	}
 	
-	req.Header.Set("Authorization", "Bearer "+JiraApiKey)
+	// For Jira Cloud, use Basic Auth with email:token if email is provided
+	if JiraEmail != "" {
+		auth := base64.StdEncoding.EncodeToString([]byte(JiraEmail + ":" + JiraApiKey))
+		req.Header.Set("Authorization", "Basic "+auth)
+	} else {
+		req.Header.Set("Authorization", "Bearer "+JiraApiKey)
+	}
 	req.Header.Set("Accept", "application/json")
 	if body != nil {
 		req.Header.Set("Content-Type", "application/json")
