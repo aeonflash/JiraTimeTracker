@@ -29,10 +29,14 @@ type UIComponents struct {
 	EndContainer         *fyne.Container
 	DurationContainer    *fyne.Container
 	TimeButtonsContainer *fyne.Container
+	StatusContainer      *fyne.Container
 	CommentContainer     *fyne.Container
 	LogButton            *widget.Button
 	BrowserButton        *widget.Button
 	MainWindow           fyne.Window
+	CurrentStatus        *StatusInfo
+	StatusDisplayLabel   *widget.Label
+	StatusChangeButton   *widget.Button
 }
 
 func createTimeButtons(ui *UIComponents) *fyne.Container {
@@ -172,6 +176,94 @@ func openBrowser(url string) error {
 	return err
 }
 
+// executeTransition executes a status transition and updates the UI
+func executeTransition(ui *UIComponents, transition Transition) {
+	if ui.SelectedIssue == "" {
+		return
+	}
+	
+	// Clear previous feedback messages
+	ui.StatusLabel.SetText("⏳ Executing transition...")
+	
+	// Execute transition in a goroutine to keep UI responsive
+	go func() {
+		err := ExecuteStatusTransition(ui.SelectedIssue, transition.ID)
+		if err != nil {
+			// Display error message with failure details
+			ui.StatusLabel.SetText(fmt.Sprintf("❌ Failed to transition: %v", err))
+			log.Printf("Error executing transition: %v", err)
+			return
+		}
+		
+		// On success, refresh status display
+		newStatus, err := GetIssueStatus(ui.SelectedIssue)
+		if err != nil {
+			ui.StatusLabel.SetText("⚠️ Transition succeeded but failed to refresh status")
+			log.Printf("Error refreshing status: %v", err)
+			return
+		}
+		
+		// Update current status and display
+		ui.CurrentStatus = newStatus
+		ui.StatusDisplayLabel.SetText(newStatus.Name)
+		
+		// Display success message for 3+ seconds
+		ui.StatusLabel.SetText(fmt.Sprintf("✅ Status changed to: %s", newStatus.Name))
+		
+		// After 3 seconds, restore the default ready message
+		time.AfterFunc(3*time.Second, func() {
+			ui.StatusLabel.SetText(fmt.Sprintf("✅ Ready to track time on %s", ui.SelectedIssue))
+		})
+	}()
+}
+
+// showTransitionsMenu displays a popup menu with available status transitions
+func showTransitionsMenu(ui *UIComponents, transitions []Transition) {
+	if len(transitions) == 0 {
+		ui.StatusLabel.SetText("ℹ️ No transitions available for this issue")
+		return
+	}
+	
+	// Create menu items with directional icons
+	var menuItems []*fyne.MenuItem
+	for _, transition := range transitions {
+		// Create a copy of the transition for the closure
+		t := transition
+		
+		// Format menu item with directional icon and target status name
+		var icon string
+		if t.IsForward {
+			icon = "→" // Forward arrow
+		} else {
+			icon = "←" // Backward arrow
+		}
+		
+		// Use target status name instead of transition name
+		menuItemLabel := fmt.Sprintf("%s %s", icon, t.To.Name)
+		
+		menuItem := fyne.NewMenuItem(menuItemLabel, func() {
+			// This will be implemented in subtask 5.3
+			executeTransition(ui, t)
+		})
+		
+		menuItems = append(menuItems, menuItem)
+	}
+	
+	// Create and show popup menu
+	menu := fyne.NewMenu("", menuItems...)
+	popupMenu := widget.NewPopUpMenu(menu, ui.MainWindow.Canvas())
+	
+	// Position the menu near the status change button
+	buttonPos := fyne.CurrentApp().Driver().AbsolutePositionForObject(ui.StatusChangeButton)
+	buttonSize := ui.StatusChangeButton.Size()
+	popupMenu.ShowAtPosition(fyne.NewPos(buttonPos.X, buttonPos.Y+buttonSize.Height))
+	
+	// Clear the loading message
+	if ui.CurrentStatus != nil {
+		ui.StatusLabel.SetText(fmt.Sprintf("✅ Ready to track time on %s", ui.SelectedIssue))
+	}
+}
+
 // Dynamically resize window based on visible content
 func resizeWindowToContent(ui *UIComponents) {
 	if ui.MainWindow == nil {
@@ -179,10 +271,18 @@ func resizeWindowToContent(ui *UIComponents) {
 	}
 	
 	// Calculate height based on visible components
-	baseHeight := float32(120) // Issue selector + status
+	baseHeight := float32(80) // Base padding and status label
+	
+	// Issue selector row (always visible)
+	baseHeight += 40
 	
 	if !ui.TimeButtonsContainer.Hidden {
 		baseHeight += 50 // Time buttons
+	}
+	
+	// Status display components (when visible, below time buttons)
+	if ui.StatusContainer != nil && !ui.StatusContainer.Hidden {
+		baseHeight += 40 // Status display and change button row
 	}
 	
 	if !ui.DurationContainer.Hidden {
@@ -214,6 +314,45 @@ func resizeWindowToContent(ui *UIComponents) {
 }
 
 func createIssueSelector(ui *UIComponents) *fyne.Container {
+	// Initialize status display label
+	ui.StatusDisplayLabel = widget.NewLabel("")
+	
+	// Initialize status change button with text
+	ui.StatusChangeButton = widget.NewButton("Update Status", func() {
+		// This will be implemented in subtask 5.2
+		if ui.SelectedIssue == "" || ui.CurrentStatus == nil {
+			return
+		}
+		
+		// Show loading state
+		ui.StatusLabel.SetText("⏳ Fetching available transitions...")
+		
+		// Fetch and display transitions
+		go func() {
+			transitions, err := GetAvailableTransitions(ui.SelectedIssue)
+			if err != nil {
+				ui.StatusLabel.SetText(fmt.Sprintf("❌ Failed to fetch transitions: %v", err))
+				log.Printf("Error fetching transitions: %v", err)
+				return
+			}
+			
+			if len(transitions) == 0 {
+				ui.StatusLabel.SetText("ℹ️ No transitions available for this issue")
+				return
+			}
+			
+			// Display transitions menu (will be implemented in subtask 5.2)
+			showTransitionsMenu(ui, transitions)
+		}()
+	})
+	ui.StatusChangeButton.Disable() // Initially disabled until issue is selected
+	
+	// Create status container with label, status display, and change button
+	// Format: [Status Label] [Status Value] [Update Status Button]
+	statusLabel := widget.NewLabel("Status")
+	ui.StatusContainer = container.NewHBox(statusLabel, ui.StatusDisplayLabel, ui.StatusChangeButton)
+	ui.StatusContainer.Hide() // Initially hidden until issue is selected
+	
 	// Function to fetch and display issue
 	fetchIssue := func(issueKey string) {
 		if issueKey == "" {
@@ -248,6 +387,25 @@ func createIssueSelector(ui *UIComponents) *fyne.Container {
 			if _, ok := fields["summary"].(string); ok {
 				ui.StatusLabel.SetText(fmt.Sprintf("✅ Ready to track time on %s", issueKey))
 				ui.SelectedIssue = issueKey
+				
+				// Fetch and display issue status
+				go func() {
+					status, err := GetIssueStatus(issueKey)
+					if err != nil {
+						ui.StatusDisplayLabel.SetText("Error fetching status")
+						log.Printf("Error fetching status: %v", err)
+					} else {
+						ui.CurrentStatus = status
+						ui.StatusDisplayLabel.SetText(status.Name)
+						
+						// Enable status change button when status is loaded
+						ui.StatusChangeButton.Enable()
+					}
+					
+					// Show status container
+					ui.StatusContainer.Show()
+					resizeWindowToContent(ui)
+				}()
 				
 				// Show time buttons, duration field, comment section and browser button when issue is selected
 				ui.TimeButtonsContainer.Show()
@@ -329,6 +487,7 @@ func createIssueSelector(ui *UIComponents) *fyne.Container {
 	})
 	
 	// Create horizontal container for dropdown and refresh button
+	// Layout: [Issue Dropdown (fills row)] [Refresh Button]
 	selectorRow := container.NewBorder(nil, nil, nil, refreshButton, ui.RecentSelect)
 	
 	return container.NewVBox(selectorRow)
@@ -489,6 +648,7 @@ func createMainForm(ui *UIComponents) *fyne.Container {
 	content := container.NewVBox(
 		issueSelectorContainer,
 		buttonContainer,
+		ui.StatusContainer,
 		jiraItemContainer,
 		bottomContainer,
 	)
