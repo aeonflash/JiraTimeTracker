@@ -91,3 +91,24 @@ type TextNode struct {
 	LocalId   string    `json:"localId"`
 	State     string    `json:"state"`
 }
+
+// StatusInfo represents the current status of an issue
+type StatusInfo struct {
+	ID          string `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Category    string `json:"statusCategory"`
+}
+
+// Transition represents an available status transition
+type Transition struct {
+	ID        string     `json:"id"`
+	Name      string     `json:"name"`
+	To        StatusInfo `json:"to"`
+	IsForward bool       // Derived field for icon display
+}
+
+// TransitionsResponse represents the API response for available transitions
+type TransitionsResponse struct {
+	Transitions []Transition `json:"transitions"`
+}
