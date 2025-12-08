@@ -33,10 +33,13 @@ type UIComponents struct {
 	CommentContainer     *fyne.Container
 	LogButton            *widget.Button
 	BrowserButton        *widget.Button
+	ReportsButton        *widget.Button
 	MainWindow           fyne.Window
 	CurrentStatus        *StatusInfo
 	StatusDisplayLabel   *widget.Label
 	StatusChangeButton   *widget.Button
+	CurrentUser          *User
+	App                  fyne.App
 }
 
 func createTimeButtons(ui *UIComponents) *fyne.Container {
@@ -549,6 +552,23 @@ func createMainForm(ui *UIComponents) *fyne.Container {
 	issueSelectorContainer := createIssueSelector(ui)
 	jiraItemContainer := createJiraItemContainer(ui)
 	
+	// Create reports button
+	ui.ReportsButton = widget.NewButton("Reports", func() {
+		// Fetch current user if not already loaded
+		if ui.CurrentUser == nil {
+			userResponse := getCurrentUser()
+			if userResponse != nil {
+				ui.CurrentUser = &userResponse.Data.Me.User
+			} else {
+				ui.StatusLabel.SetText("❌ Failed to fetch user information")
+				return
+			}
+		}
+		
+		// Open reporting window with current user and app
+		OpenReportingWindow(ui.CurrentUser, ui.App)
+	})
+	
 	// Create log button
 	ui.LogButton = widget.NewButton("Log Time", func() {
 		if ui.SelectedIssue == "" {
@@ -641,8 +661,8 @@ func createMainForm(ui *UIComponents) *fyne.Container {
 	// Initially disable the log button
 	ui.LogButton.Disable()
 	
-	// Create bottom container with log button aligned right
-	bottomContainer := container.NewBorder(nil, nil, nil, ui.LogButton)
+	// Create bottom container with reports button on left and log button on right
+	bottomContainer := container.NewBorder(nil, nil, ui.ReportsButton, ui.LogButton)
 	
 	// Create main container with proper margins
 	content := container.NewVBox(

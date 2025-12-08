@@ -1,5 +1,10 @@
 package main
 
+import (
+	"sync"
+	"time"
+)
+
 type JiraResponse struct {
 	Data       Data       `json:"data"`
 	Extensions Extensions `json:"extensions"`
@@ -112,3 +117,25 @@ type Transition struct {
 type TransitionsResponse struct {
 	Transitions []Transition `json:"transitions"`
 }
+
+// RequestQueue manages sequential processing of report generation requests
+type RequestQueue struct {
+	queue   []ReportRequest
+	mutex   sync.Mutex
+	processing bool
+}
+
+// ReportRequest represents a single report generation request
+type ReportRequest struct {
+	ID        int
+	DateRange DateRange
+	Timestamp time.Time
+}
+
+// ExportFormat represents the format for exporting reports
+type ExportFormat int
+
+const (
+	ExportFormatCSV ExportFormat = iota
+	ExportFormatPDF
+)

@@ -8,8 +8,10 @@ import (
 // Search APIs
 func SearchIssues(jql, expand string, fields []string, startAt, maxResults int, validateQuery bool) ([]byte, error) {
 	params := map[string]string{
-		"jql":    jql,
-		"expand": expand,
+		"jql": jql,
+	}
+	if expand != "" {
+		params["expand"] = expand
 	}
 	if len(fields) > 0 {
 		params["fields"] = strings.Join(fields, ",")
@@ -23,9 +25,11 @@ func SearchIssues(jql, expand string, fields []string, startAt, maxResults int, 
 	if validateQuery {
 		params["validateQuery"] = "true"
 	}
-	return MakeJiraAPICall("GET", "/rest/api/3/search", nil, params)
+	// Use the new search/jql endpoint with GET
+	return MakeJiraAPICall("GET", "/rest/api/3/search/jql", nil, params)
 }
 
 func SearchIssuesPost(searchRequest interface{}) ([]byte, error) {
-	return MakeJiraAPICall("POST", "/rest/api/3/search", searchRequest, nil)
+	// Use the standard search endpoint with POST
+	return MakeJiraAPICall("POST", "/rest/api/2/search", searchRequest, nil)
 }

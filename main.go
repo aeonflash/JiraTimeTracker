@@ -43,6 +43,7 @@ func main() {
 		StatusLabel:   widget.NewLabel("Select an issue to start tracking time"),
 		SelectedIssue: "",
 		MainWindow:    w, // Pass window reference for dynamic resizing
+		App:           a, // Pass app reference for opening reporting window
 	}
 
 	content := createMainForm(ui)

@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/base64"
 	"encoding/json"
 	"io"
 	"log"
@@ -41,7 +42,14 @@ func getCurrentUser() *JiraResponse {
 	}
 	
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer "+jiraApiKey)
+	
+	// Use the same authentication method as the REST API
+	if jiraApiFunctions.JiraEmail != "" {
+		auth := base64.StdEncoding.EncodeToString([]byte(jiraApiFunctions.JiraEmail + ":" + jiraApiKey))
+		req.Header.Set("Authorization", "Basic "+auth)
+	} else {
+		req.Header.Set("Authorization", "Bearer "+jiraApiKey)
+	}
 	
 	client := &http.Client{}
 	resp, err := client.Do(req)
@@ -51,11 +59,18 @@ func getCurrentUser() *JiraResponse {
 	}
 	defer resp.Body.Close()
 	
+	body, _ := io.ReadAll(resp.Body)
+	
 	if resp.StatusCode == http.StatusOK {
-		body, _ := io.ReadAll(resp.Body)
 		var userResponse JiraResponse
-		json.Unmarshal(body, &userResponse)
+		if err := json.Unmarshal(body, &userResponse); err != nil {
+			log.Println("Error unmarshaling user response:", err)
+			log.Println("Response body:", string(body))
+			return nil
+		}
 		return &userResponse
 	}
+	
+	log.Printf("Failed to get current user. Status: %d, Body: %s\n", resp.StatusCode, string(body))
 	return nil
 }
