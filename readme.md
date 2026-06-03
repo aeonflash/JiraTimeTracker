@@ -16,18 +16,33 @@ go run . logs
 
 ## Configuration
 
-The application reads credentials from `~/.jirarc`:
+On first launch, a setup wizard walks you through connecting to your Jira instance. It prompts for your Jira URL, email, and API token, then writes `~/.jirarc` automatically.
+
+To generate an API token, visit: https://id.atlassian.com/manage-profile/security/api-tokens
+
+The resulting config file (`~/.jirarc`):
 
 ```json
 {
   "jira": "<your-jira-api-token>",
-  "email": "<your-atlassian-email>"
+  "email": "<your-atlassian-email>",
+  "graphqlUri": "https://your-org.atlassian.net/gateway/api/graphql",
+  "cloudId": "<your-cloud-id>"
 }
 ```
 
-Authentication uses Basic Auth (email + API token) for Jira Cloud, or Bearer token if no email is provided.
+Authentication uses Basic Auth (email + API token) for Jira Cloud, or Bearer token if no email is provided. If the config file is deleted, the setup wizard will reappear on next launch.
 
 ## Features
+
+### Setup Wizard
+
+On first run (when `~/.jirarc` is missing), a guided setup wizard collects the Jira URL, email, and API token. Validates inputs, writes the config with `0600` permissions, and transitions directly to the main app.
+
+**Key functions:**
+- `jiraConfigExists()` — Checks if `~/.jirarc` exists and has content
+- `saveJiraConfig()` — Writes config as formatted JSON
+- `showSetupWizard()` — Renders the wizard UI and handles validation/save
 
 ### Time Tracking
 
@@ -113,7 +128,8 @@ Fetches the authenticated user's profile via the Jira GraphQL API to identify th
 
 | File | Responsibility |
 |------|---------------|
-| `main.go` | Entry point, CLI mode, Fyne app initialization |
+| `main.go` | Entry point, CLI mode, Fyne app initialization, config check |
+| `setup_wizard.go` | First-run setup wizard UI and config file creation |
 | `uiUtils.go` | Main form layout, time buttons, issue selector, log button |
 | `jiraUtils.go` | Jira REST API interactions (get issue, log work, status, transitions) |
 | `userUtils.go` | Config loading, current user GraphQL query |
