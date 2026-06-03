@@ -23,8 +23,23 @@ func main() {
 		return
 	}
 	
-	loadJiraConfig()
 	a := app.New()
+
+	// Check if config exists; if not, show setup wizard first
+	if !jiraConfigExists() {
+		showSetupWizard(a, func() {
+			launchMainWindow(a)
+		})
+		a.Run()
+		return
+	}
+
+	loadJiraConfig()
+	launchMainWindow(a)
+	a.Run()
+}
+
+func launchMainWindow(a fyne.App) {
 	w := a.NewWindow("JiraWidgetLite")
 	w.SetTitle("JiraWidgetLite")
 
@@ -41,18 +56,18 @@ func main() {
 		DurationText:  widget.NewLabel(""),
 		StatusLabel:   widget.NewLabel("Select an issue to start tracking time"),
 		SelectedIssue: "",
-		MainWindow:    w, // Pass window reference for dynamic resizing
-		App:           a, // Pass app reference for opening reporting window
+		MainWindow:    w,
+		App:           a,
 	}
 
 	content := createMainForm(ui)
 	w.SetContent(content)
 	
 	// Set initial compact window size - wider to accommodate dropdown options
-	w.Resize(fyne.NewSize(550, 200)) // Wider to fit full dropdown text
-	w.SetFixedSize(false) // Allow resizing
+	w.Resize(fyne.NewSize(550, 200))
+	w.SetFixedSize(false)
 	
-	w.ShowAndRun()
+	w.Show()
 }
 
 func viewLogs() {
