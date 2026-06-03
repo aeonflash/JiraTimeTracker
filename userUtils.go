@@ -23,7 +23,15 @@ func loadJiraConfig() {
 	if jira, ok := config["jira"].(string); ok {
 		jiraApiKey = jira
 		jiraApiFunctions.JiraApiKey = jira
-		jiraApiFunctions.JiraGraphQlBaseUri = jiraGraphQlBaseUri
+	}
+	// Load Jira base URI
+	if uri, ok := config["graphqlUri"].(string); ok {
+		jiraGraphQlBaseUri = uri
+		jiraApiFunctions.JiraGraphQlBaseUri = uri
+	}
+	// Load Cloud ID
+	if cloudId, ok := config["cloudId"].(string); ok {
+		jiraCloudId = cloudId
 	}
 	// Also check for email if provided
 	if email, ok := config["email"].(string); ok {

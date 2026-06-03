@@ -10,9 +10,8 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-var jiraGraphQlBaseUri = "REDACTED_GRAPHQL_URI"
-var jiraCloudId ="REDACTED_CLOUD_ID"
-
+var jiraGraphQlBaseUri string
+var jiraCloudId string
 var jiraApiKey string
 
 

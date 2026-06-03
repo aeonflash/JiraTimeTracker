@@ -14,24 +14,48 @@ func TestLoadJiraConfig_Success(t *testing.T) {
 	tempDir := t.TempDir()
 	configFile := filepath.Join(tempDir, ".jirarc")
 	
-	config := map[string]string{"jira": "test-api-key-123"}
+	config := map[string]string{
+		"jira":       "test-api-key-123",
+		"email":      "test@example.com",
+		"graphqlUri": "https://test.atlassian.net/gateway/api/graphql",
+		"cloudId":    "test-cloud-id-456",
+	}
 	configData, _ := json.Marshal(config)
 	os.WriteFile(configFile, configData, 0644)
 	
-	// Mock os.UserHomeDir
-	originalHomeDir := os.Getenv("HOME")
+	// Mock os.UserHomeDir by setting both HOME and USERPROFILE
+	originalHome := os.Getenv("HOME")
+	originalUserProfile := os.Getenv("USERPROFILE")
 	os.Setenv("HOME", tempDir)
-	defer os.Setenv("HOME", originalHomeDir)
+	os.Setenv("USERPROFILE", tempDir)
+	defer func() {
+		os.Setenv("HOME", originalHome)
+		os.Setenv("USERPROFILE", originalUserProfile)
+	}()
 	
-	// Clear jiraApiKey and test
+	// Clear globals and test
 	originalKey := jiraApiKey
+	originalUri := jiraGraphQlBaseUri
+	originalCloudId := jiraCloudId
 	jiraApiKey = ""
-	defer func() { jiraApiKey = originalKey }()
+	jiraGraphQlBaseUri = ""
+	jiraCloudId = ""
+	defer func() {
+		jiraApiKey = originalKey
+		jiraGraphQlBaseUri = originalUri
+		jiraCloudId = originalCloudId
+	}()
 	
 	loadJiraConfig()
 	
 	if jiraApiKey != "test-api-key-123" {
 		t.Errorf("Expected jiraApiKey 'test-api-key-123', got '%s'", jiraApiKey)
+	}
+	if jiraGraphQlBaseUri != "https://test.atlassian.net/gateway/api/graphql" {
+		t.Errorf("Expected jiraGraphQlBaseUri 'https://test.atlassian.net/gateway/api/graphql', got '%s'", jiraGraphQlBaseUri)
+	}
+	if jiraCloudId != "test-cloud-id-456" {
+		t.Errorf("Expected jiraCloudId 'test-cloud-id-456', got '%s'", jiraCloudId)
 	}
 }
 
@@ -40,9 +64,14 @@ func TestLoadJiraConfig_FileNotFound(t *testing.T) {
 	tempDir := t.TempDir()
 	nonExistentDir := filepath.Join(tempDir, "nonexistent")
 	
-	originalHomeDir := os.Getenv("HOME")
+	originalHome := os.Getenv("HOME")
+	originalUserProfile := os.Getenv("USERPROFILE")
 	os.Setenv("HOME", nonExistentDir)
-	defer os.Setenv("HOME", originalHomeDir)
+	os.Setenv("USERPROFILE", nonExistentDir)
+	defer func() {
+		os.Setenv("HOME", originalHome)
+		os.Setenv("USERPROFILE", originalUserProfile)
+	}()
 	
 	originalKey := jiraApiKey
 	jiraApiKey = "original-key"
@@ -63,9 +92,14 @@ func TestLoadJiraConfig_InvalidJSON(t *testing.T) {
 	// Write invalid JSON
 	os.WriteFile(configFile, []byte("{invalid json"), 0644)
 	
-	originalHomeDir := os.Getenv("HOME")
+	originalHome := os.Getenv("HOME")
+	originalUserProfile := os.Getenv("USERPROFILE")
 	os.Setenv("HOME", tempDir)
-	defer os.Setenv("HOME", originalHomeDir)
+	os.Setenv("USERPROFILE", tempDir)
+	defer func() {
+		os.Setenv("HOME", originalHome)
+		os.Setenv("USERPROFILE", originalUserProfile)
+	}()
 	
 	originalKey := jiraApiKey
 	jiraApiKey = "original-key"

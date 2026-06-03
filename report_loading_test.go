@@ -106,10 +106,10 @@ func TestPropertyControlDisablingDuringLoading(t *testing.T) {
 				// Export button is initially disabled until reports are generated
 				// This is expected behavior
 			}
-			if rw.StartDatePicker.Disabled() {
+			if rw.StartDateButton.Disabled() {
 				return false
 			}
-			if rw.EndDatePicker.Disabled() {
+			if rw.EndDateButton.Disabled() {
 				return false
 			}
 
@@ -123,10 +123,10 @@ func TestPropertyControlDisablingDuringLoading(t *testing.T) {
 			if !rw.ExportButton.Disabled() {
 				return false
 			}
-			if !rw.StartDatePicker.Disabled() {
+			if !rw.StartDateButton.Disabled() {
 				return false
 			}
-			if !rw.EndDatePicker.Disabled() {
+			if !rw.EndDateButton.Disabled() {
 				return false
 			}
 
@@ -141,10 +141,10 @@ func TestPropertyControlDisablingDuringLoading(t *testing.T) {
 				// Export button remains disabled until reports are generated
 				// This is expected behavior
 			}
-			if rw.StartDatePicker.Disabled() {
+			if rw.StartDateButton.Disabled() {
 				return false
 			}
-			if rw.EndDatePicker.Disabled() {
+			if rw.EndDateButton.Disabled() {
 				return false
 			}
 
@@ -209,10 +209,10 @@ func TestPropertySuccessStateTransition(t *testing.T) {
 			if rw.RefreshButton.Disabled() {
 				return false
 			}
-			if rw.StartDatePicker.Disabled() {
+			if rw.StartDateButton.Disabled() {
 				return false
 			}
-			if rw.EndDatePicker.Disabled() {
+			if rw.EndDateButton.Disabled() {
 				return false
 			}
 
@@ -283,10 +283,10 @@ func TestPropertyFailureStateTransition(t *testing.T) {
 			if rw.RefreshButton.Disabled() {
 				return false
 			}
-			if rw.StartDatePicker.Disabled() {
+			if rw.StartDateButton.Disabled() {
 				return false
 			}
-			if rw.EndDatePicker.Disabled() {
+			if rw.EndDateButton.Disabled() {
 				return false
 			}
 
