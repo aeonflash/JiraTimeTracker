@@ -37,12 +37,23 @@ Authentication uses Basic Auth (email + API token) for Jira Cloud, or Bearer tok
 
 ### Setup Wizard
 
-On first run (when `~/.jirarc` is missing), a guided setup wizard collects the Jira URL, email, and API token. Validates inputs, writes the config with `0600` permissions, and transitions directly to the main app.
+On first run (when `~/.jirarc` is missing), a guided setup wizard collects the Jira URL, email, and API token. Validates inputs, tests the connection, writes the config with `0600` permissions, and transitions directly to the main app.
+
+**Validation:**
+- URL must be `https://` with a valid hostname
+- Email must match standard email format
+- API token must be at least 10 characters
+- Performs a live connection test (`GET /rest/api/3/myself`) before saving
+- Returns specific error messages for auth failures, network issues, and permission problems
 
 **Key functions:**
 - `jiraConfigExists()` — Checks if `~/.jirarc` exists and has content
+- `validateJiraURL()` — URL format and scheme validation
+- `validateEmail()` — Email regex validation
+- `validateAPIToken()` — Token presence and length check
+- `testJiraConnection()` — Live API call to verify credentials
 - `saveJiraConfig()` — Writes config as formatted JSON
-- `showSetupWizard()` — Renders the wizard UI and handles validation/save
+- `showSetupWizard()` — Renders the wizard UI and orchestrates validation/save
 
 ### Time Tracking
 
