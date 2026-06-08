@@ -1,10 +1,15 @@
 package main
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
+	"net/http"
+	"net/url"
 	"os"
+	"regexp"
 	"strings"
 
 	"fyne.io/fyne/v2"
@@ -46,6 +51,94 @@ func saveJiraConfig(config map[string]string) error {
 	return nil
 }
 
+// validateJiraURL checks that the URL is a valid HTTPS Atlassian URL
+func validateJiraURL(rawURL string) error {
+	if rawURL == "" {
+		return fmt.Errorf("Jira URL is required")
+	}
+
+	parsed, err := url.Parse(rawURL)
+	if err != nil {
+		return fmt.Errorf("invalid URL format")
+	}
+
+	if parsed.Scheme != "https" {
+		return fmt.Errorf("URL must start with https://")
+	}
+
+	if parsed.Host == "" {
+		return fmt.Errorf("URL must include a hostname")
+	}
+
+	return nil
+}
+
+// validateEmail checks for a basic valid email format
+func validateEmail(email string) error {
+	if email == "" {
+		return fmt.Errorf("email is required")
+	}
+
+	// Basic email regex: something@something.something
+	emailRegex := regexp.MustCompile(`^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$`)
+	if !emailRegex.MatchString(email) {
+		return fmt.Errorf("invalid email format")
+	}
+
+	return nil
+}
+
+// validateAPIToken checks that the token is non-empty and reasonable length
+func validateAPIToken(token string) error {
+	if token == "" {
+		return fmt.Errorf("API token is required")
+	}
+
+	if len(token) < 10 {
+		return fmt.Errorf("API token seems too short — check that you pasted the full token")
+	}
+
+	return nil
+}
+
+// testJiraConnection makes a test API call to verify credentials work
+func testJiraConnection(baseURL, email, apiToken string) error {
+	testURL := baseURL + "/rest/api/3/myself"
+
+	req, err := http.NewRequest("GET", testURL, nil)
+	if err != nil {
+		return fmt.Errorf("failed to build request: %w", err)
+	}
+
+	auth := base64.StdEncoding.EncodeToString([]byte(email + ":" + apiToken))
+	req.Header.Set("Authorization", "Basic "+auth)
+	req.Header.Set("Accept", "application/json")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return fmt.Errorf("connection failed — check your URL and internet connection")
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode == http.StatusOK {
+		return nil
+	}
+
+	body, _ := io.ReadAll(resp.Body)
+
+	switch resp.StatusCode {
+	case 401:
+		return fmt.Errorf("authentication failed — check your email and API token")
+	case 403:
+		return fmt.Errorf("access forbidden — your token may lack permissions")
+	case 404:
+		return fmt.Errorf("Jira API not found — check your URL is correct")
+	default:
+		return fmt.Errorf("unexpected response (%d): %s", resp.StatusCode, string(body[:min(200, len(body))]))
+	}
+}
+
 // showSetupWizard displays the configuration wizard and calls onComplete when finished
 func showSetupWizard(app fyne.App, onComplete func()) {
 	w := app.NewWindow("JiraWidgetLite - Setup")
@@ -75,54 +168,76 @@ func showSetupWizard(app fyne.App, onComplete func()) {
 		"Generate an API token at [id.atlassian.com/manage-profile/security/api-tokens](https://id.atlassian.com/manage-profile/security/api-tokens)",
 	)
 
-	// Save button
-	saveButton := widget.NewButton("Connect", func() {
+	// Save button (declared first so it can be referenced in the callback)
+	var saveButton *widget.Button
+	saveButton = widget.NewButton("Connect", func() {
 		// Validate inputs
 		jiraURL := strings.TrimSpace(jiraURLEntry.Text)
 		email := strings.TrimSpace(emailEntry.Text)
 		apiToken := strings.TrimSpace(apiTokenEntry.Text)
 
-		if jiraURL == "" {
-			statusLabel.SetText("❌ Jira URL is required")
-			return
-		}
-		if email == "" {
-			statusLabel.SetText("❌ Email is required")
-			return
-		}
-		if apiToken == "" {
-			statusLabel.SetText("❌ API token is required")
+		// URL validation
+		if err := validateJiraURL(jiraURL); err != nil {
+			statusLabel.SetText(fmt.Sprintf("❌ %s", err.Error()))
 			return
 		}
 
-		// Normalize URL: strip trailing slash, build graphqlUri
+		// Email validation
+		if err := validateEmail(email); err != nil {
+			statusLabel.SetText(fmt.Sprintf("❌ %s", err.Error()))
+			return
+		}
+
+		// API token validation
+		if err := validateAPIToken(apiToken); err != nil {
+			statusLabel.SetText(fmt.Sprintf("❌ %s", err.Error()))
+			return
+		}
+
+		// Normalize URL: strip trailing slash
 		jiraURL = strings.TrimRight(jiraURL, "/")
 		graphqlUri := jiraURL + "/gateway/api/graphql"
 
-		// Build config
-		config := map[string]string{
-			"jira":       apiToken,
-			"email":      email,
-			"graphqlUri": graphqlUri,
-		}
+		// Test connection
+		statusLabel.SetText("⏳ Testing connection to Jira...")
+		saveButton.Disable()
 
-		statusLabel.SetText("⏳ Saving configuration...")
+		go func() {
+			if err := testJiraConnection(jiraURL, email, apiToken); err != nil {
+				fyne.Do(func() {
+					statusLabel.SetText(fmt.Sprintf("❌ %s", err.Error()))
+					saveButton.Enable()
+				})
+				return
+			}
 
-		// Save to disk
-		if err := saveJiraConfig(config); err != nil {
-			statusLabel.SetText(fmt.Sprintf("❌ Failed to save: %v", err))
-			log.Printf("Setup wizard save error: %v", err)
-			return
-		}
+			// Build config
+			config := map[string]string{
+				"jira":       apiToken,
+				"email":      email,
+				"graphqlUri": graphqlUri,
+			}
 
-		// Load the config into the running app
-		loadJiraConfig()
+			// Save to disk
+			if err := saveJiraConfig(config); err != nil {
+				fyne.Do(func() {
+					statusLabel.SetText(fmt.Sprintf("❌ Failed to save: %v", err))
+					saveButton.Enable()
+				})
+				log.Printf("Setup wizard save error: %v", err)
+				return
+			}
 
-		statusLabel.SetText("✅ Configuration saved!")
+			// Load the config into the running app
+			loadJiraConfig()
 
-		// Close wizard and launch main app
-		w.Close()
-		onComplete()
+			fyne.Do(func() {
+				statusLabel.SetText("✅ Connected successfully!")
+				// Close wizard and launch main app
+				w.Close()
+				onComplete()
+			})
+		}()
 	})
 
 	// Layout
